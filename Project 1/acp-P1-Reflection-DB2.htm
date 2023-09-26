@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="John coffey">
+<meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; U) [Netscape]"><title>Project 1</title>
+
+<style>
+<!--
+div.Section1
+{page:Section1;}
+-->
+</style></head><body>
+<center>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">The University of West Florida <br> Department of Computer Science</span></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">Advanced Computer Programming Assignment</span></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">John W. Coffey</span></b></p>
+</center>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b>Project Topics and Goals</b></p>
+<ul>
+<li>program refactoring to improve structure</li>
+<li>work with the Derby database and the Java Reflection API</li>
+<li>automate database creation from class definitions and instances</li>
+</ul>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b>Program Description</b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"></p>
+<p>This project will involve improving the structure of this basic database program <span style="font-family: monospace;">testDB</span> and extending its functionality.  The example program is poorly structured since all
+functionality is in main(). You should use the template program provided. <br>
+</p>
+<p>The program you will develop will automate
+the creation of a database table by extracting the table
+layout from attributes of a class. To do this, we will utilize the Java
+reflection API. Your first task will be to
+refactor this example into a more modularized program with reusable
+methods to create a table in the database, to add records to the table,
+to issue basic queries on the database. You should create any
+additional classes you deem necessary to good program design. <br>
+</p>
+
+<p>You will create a <span style="font-family: 'courier new',courier,sans-serif;">class Vehicle</span>.
+The class should have <span style="font-style: italic;">four instance fields:</span> make (values: Chevy, Ford,
+Toyota, Nissan, Hyundai) size (values: compact, intermediate,
+fullSized), weight (double), and engineSize (double). <br>
+</p>
+<p><span style="font-weight: bold;">Important note: </span>You DO NOT have to create any methods in <span style="font-family: monospace;">class Vehicle</span> and <span style="font-family: monospace;">class Vehicle</span> <span style="font-style: italic;">definitely</span> should not be respnsible for creating instances of itself. Remember "assignment of responsibility."<br>
+</p>
+
+<p>You will create a disk file with
+ten&nbsp;vehicles by randomly
+selecting makes and models from the above enumerations, and randomly
+select weights between 1500 and 4000 pounds. Weights must be such that
+compact cars (1500-2000) weigh less than intermediate cars (2000-2500)
+and intermediate cars weigh less than the rest. Full-sized
+cars are in the weight range (2500-4000). Create the comma-separated
+values for 10 vehicles by randomly selecting makes and weights, the
+appropriate size for the selected weight and an enginesize between 100
+and 200, and write them to a disk file named <span style="font-family: monospace;">Vehicles.csv</span>. You do not have to create the vehicle data by creating instances of class vehicle. <br>
+</p>
+
+<p>You will use the Reflection API to analyze all the instance fields
+in class&nbsp;Vehicle and to issue a command to create a table with the
+proper fields and proper data types for all fields. Your program will
+create a log file named "<span style="font-family: 'courier new',courier,sans-serif;">dbOperations.log</span>"
+that notes all major database events in this process (all table
+creation, addition of values, queries, table deletions, etc). After
+creating the file and using reflection to set up the database
+table, you will read <span style="font-family: monospace;">Vehicles.csv</span> to get data to add to the
+database.</p>
+
+
+<p>Note that the object oriented concept of composition, in which one
+class is composed of instances of another class that are stored in a
+container, quickly complicates the process of performing this type of
+task. Object-Relational modeling seeks to address the mismatch between
+the way data is represented in instances of classes and in relational
+databases. We
+will discuss object-relational modeling later. </p>
+<p>Furthermore, the larger the set of data types we employ, the
+larger the overall problem we are addressing becomes. Consequently, we
+will limit data types our program must manage to ints,
+doubles and Strings. However, if your program encounters a field type
+that is none of the ones your program must handle, your program must generate a
+log entry mentioning the field in the class that was not
+created in the database. Presumably, in a deployed system, a human
+could make decisions regarding how to handle these situations.<br>
+<br><br>
+<span style="font-weight: bold;">When the project runs:</span></p>
+
+<p>When your program runs, it will create the Vehicle instances and write them to <span style="font-family: monospace;">Vehicles.csv</span>. It will then analyze class&nbsp;<span style="font-family: monospace;">Vehicle</span> using the
+reflection API to extract the instance fields and it will create
+a SQL command to create the database table. It will issue that command.
+After doing that, it will read the 10 vehicle instances, create SQL commands to add the values to the
+table, and issue the commands. Finally, the program will issue three SQL
+queries to display:</p>
+<ul>
+  <li> all the vehicles that have been stored in the
+database. <br>
+  </li>
+  <li>all Chevys and Toyotas</li>
+  <li>all vehicles weighing more than 2500 pounds<br>
+  </li>
+</ul>
+<p>Your program will create a log entry for each SQL operation
+performed. At the end, your program will read and display the log file.
+All SQL commands should ideally be issued as<a href="https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html"> prepared statements</a>.<span style="font-weight: bold;"> </span><span style="font-style: italic; font-weight: bold;">No
+interaction with the user should take place when the program runs</span>. When the program runs, it
+should do its work and display progress indicators along the way (for
+instance, " Creating Vehicles.csv", "Creating the database table",
+"Putting data in the table", and "Issuing query &lt;querystring&gt;".
+The output of the queries should also go to the console. Please do
+not have any file output after creating the Vehicle instances in the
+local file system except the log file entries. All output except log entries should be to the console.<span style="font-weight: bold;"><br>
+</span></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Please review the policy on Academic dishonesty.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"></p>
+<div class="Section1"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; line-height: normal; widows: 1;"><span style="font-weight: bold;">Submission requirements:</span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-weight: bold;"></span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium;">
+<div class="gmail-Section1" style="page: Section1; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium;"><span style="line-height: normal; widows: 1;">1. Compile and run your program one last time before submitting it.<br>2. Rename your Eclipse project folder&nbsp;</span><span style="line-height: normal; widows: 1;">&lt;lastName&gt;</span><span style="line-height: normal; widows: 1;">&lt;firstInitial&gt;</span><span style="line-height: normal; widows: 1;">. If I were submitting project 1, my project folder name would be coffeyj.</span><br><span style="line-height: normal; widows: 1;">Place ALL deliverables in your submission into a folder by the same name.&nbsp;</span><span style="line-height: normal; widows: 1;">That folder should hold:<br></span><ul><li><span style="line-height: normal; widows: 1;">UML class diagram</span></li><li><span style="line-height: normal; widows: 1;">User's manual</span></li><li><span style="line-height: normal; widows: 1;">The folder holding your Eclipse project named&nbsp;</span><span style="line-height: normal; widows: 1;">&lt;lastName&gt;</span><span style="line-height: normal; widows: 1;">&lt;firstInitial&gt;</span></li></ul><span style="line-height: normal; widows: 1;">3.
+zip that folder into a .zip file with the SAME NAME. This means that
+inside your zip file, you will have exactly one folder (from the
+example: coffeyj). Inside that folder will be the Eclipse project and
+the other two files.<br>My submission would be structured like this<br></span><span style="line-height: normal; widows: 1;"><span style="font-family: monospace;">- coffeyj.zip&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // the .zip file holding my submission</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; - coffeyj&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // folder for the entire project</span></span></div>
+<div class="gmail-Section1" style="page: Section1; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium;"><span style="line-height: normal; widows: 1;"><span style="font-family: monospace;">&nbsp;
+&nbsp; -
+coffeyj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// the renamed Eclipse folder</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; &nbsp; - coffeyjUML.jpg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // assumes a .jpg</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; &nbsp; - coffeyjUsersManual.docx&nbsp; // user's manual - note anything that does not work properly<br>
+</span></span></div>
+<div class="Section1"><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;"><span style="font-family: monospace;"></span></span><span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;"><br>
+</span><span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;"></span><br style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"> <span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;">4.
+DO NOT make any other folders for documentation or
+anything else inside the main folder. Leave the Eclipse folders as Eclipse made them. Any changes simply
+necessitates more navigation time to get where we need to go to grade</span><span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;">.</span><br style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"> <span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;">5.
+MacOS users - remove the _MacOS_ utility folder if it exists. It just takes up space and is not needed for anything we do
+with your submissions.</span><br style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"> <span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;">6. Login</span><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;"> into Canvas.</span><span style="color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"></span><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;"><span class="Apple-converted-space"> </span></span><span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;">Select our course.</span><br style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"> <span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;">7. Go to the Assignments and choose Project 1.</span><br style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"> <span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;">8. Click the "Submit Assignment" button and upload your .zip file. ALWAYS give yourself enough time. If you are
+trying to submit at 11:57pm on your machine, the clock might be off and
+the dropbox might already be closed.</span>
+<p style="margin-right: 0in; margin-left: 0in; font-size: medium; font-family: 'Times New Roman',serif; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;">Please review the policy on ACADEMIC MISCONDUCT. This is an<span class="Apple-converted-space">&nbsp;</span><i>individual assignment.</i></p>
+</div>
+</div>
+</body></html>
