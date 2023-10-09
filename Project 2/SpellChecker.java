@@ -1,4 +1,4 @@
-import java.awt.TextArea;
+import javafx.scene.control.TextArea;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -43,6 +43,14 @@ public class SpellChecker extends Application {
 		menuFile = new Menu("File");	
 		textArea = new TextArea();
 		
+		// Configuring the text area
+		textArea.setWrapText(true);
+		textArea.prefWidthProperty().bind(mainStage.widthProperty());
+        textArea.prefHeightProperty().bind(mainStage.heightProperty());
+		
+        // Configurnig the fileChooser
+        //fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+		
 		// Creating menu items + Event handling
 		newItem = createItem("New", new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent event) {
@@ -71,16 +79,14 @@ public class SpellChecker extends Application {
 			}
 		});
 		exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
-		
-		// Configuring the text area
-		
-		
+        
 		// Add items to menu(s)
 		menuFile.getItems().addAll(newItem, openItem, saveItem, exitItem);
 		menuBar.getMenus().addAll(menuFile);
 		
 		// Add to scene
 		root.setTop(menuBar);
+		root.setCenter(textArea);
 		
 		// Set scene and make visible
 		mainScene = new Scene(root, 500, 400);
