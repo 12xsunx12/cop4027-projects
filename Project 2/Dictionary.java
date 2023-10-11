@@ -21,16 +21,6 @@ public class Dictionary {
 		wordList = AddWordListToSet();
 	}
 	
-	private Set<String> AddWordListToSet() {
-		Set<String> words = new HashSet<String>();
-		
-		while(fileScanner.hasNextLine()) {
-			words.add(fileScanner.nextLine());
-		}
-		
-		return words;
-	}
-	
 	public Set<String> GetWordListSet() {
 		return wordList;
 	}
@@ -49,5 +39,15 @@ public class Dictionary {
 		for (String i: wordList) {
 			System.out.println(i);
 		}
+	}
+	
+	private Set<String> AddWordListToSet() {
+		Set<String> words = new HashSet<String>();
+		
+		while(fileScanner.hasNextLine()) {
+			words.add(fileScanner.nextLine());
+		}
+		
+		return words;
 	}
 }
