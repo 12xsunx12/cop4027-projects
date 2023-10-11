@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -48,6 +50,7 @@ public class WordEditor extends Application {
 	public void start(Stage mainStage) {
 		mainStage.setTitle("Text Editor");
 		
+		// Creating variables
 		root = new BorderPane();
 		menuBar = new MenuBar();
 		menuFile = new Menu("File");	
@@ -65,16 +68,16 @@ public class WordEditor extends Application {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));                
 		
 		// Creating menu items + Event handling
-		newItem = createNewItem("New");
+		newItem = CreateNewItem("New");
 		newItem.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
 		
-		openItem = createOpenItem("Open", mainStage);
+		openItem = CreateOpenItem("Open", mainStage);
 		openItem.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
 		
-		saveItem = createSaveItem("Save", mainStage);
+		saveItem = CreateSaveItem("Save", mainStage);
 		saveItem.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
 		
-		exitItem = createExitItem("Exit");
+		exitItem = CreateExitItem("Exit");
 		exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
         
 		// Add items to menu(s)
@@ -91,7 +94,7 @@ public class WordEditor extends Application {
 		mainStage.show();
 	}
 	
-	private MenuItem createNewItem(String name) {
+	private MenuItem CreateNewItem(String name) {
 		MenuItem item = new MenuItem(name);
 		item.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent event) {
@@ -101,30 +104,30 @@ public class WordEditor extends Application {
 		return item;
 	}
 	
-	private MenuItem createOpenItem(String name, Stage mainStage) {
+	private MenuItem CreateOpenItem(String name, Stage mainStage) {
 		MenuItem item = new MenuItem(name);
 		item.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent event) {
-				openFile(mainStage);
+				OpenFile(mainStage);
 			}
 		});
 		return item;
 	}
 	
-	private MenuItem createSaveItem(String name, Stage mainStage) {
+	private MenuItem CreateSaveItem(String name, Stage mainStage) {
 		MenuItem item = new MenuItem(name);
 		item.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent event) {
 				File file = fileChooser.showSaveDialog(mainStage);
 				if (file != null) {
-					saveTextToFile(textArea.getText(), file);
+					SaveTextToFile(textArea.getText(), file);
 				}
 			}
 		});
 		return item;
 	}
 	
-	private MenuItem createExitItem(String name) {
+	private MenuItem CreateExitItem(String name) {
 		MenuItem item = new MenuItem(name);
 		item.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent event) {
@@ -134,7 +137,7 @@ public class WordEditor extends Application {
 		return item;
 	}
 	
-	private void saveTextToFile(String text, File file) {
+	private void SaveTextToFile(String text, File file) {
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(text);
         } catch (IOException e) {
@@ -142,7 +145,7 @@ public class WordEditor extends Application {
         }
     }
 	
-	private void openFile(Stage mainStage) {
+	private void OpenFile(Stage mainStage) {
 		File file = fileChooser.showOpenDialog(mainStage);
         if (file != null) {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {

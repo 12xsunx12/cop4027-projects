@@ -10,17 +10,18 @@ public class Dictionary {
 	private Scanner fileScanner;
 	
 	public Dictionary() {
-		wordList = new HashSet<String>();
 		file = new File("Words.txt");
 		
-	    try {
+		try {
 			fileScanner = new Scanner(file);
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		wordList = AddWordListToSet();
 	}
 	
-	public Set<String> getWordList() {
+	private Set<String> AddWordListToSet() {
 		Set<String> words = new HashSet<String>();
 		
 		while(fileScanner.hasNextLine()) {
@@ -28,5 +29,25 @@ public class Dictionary {
 		}
 		
 		return words;
+	}
+	
+	public Set<String> GetWordListSet() {
+		return wordList;
+	}
+	
+	public String GetWordListString() {
+		String words = "";
+		
+		while(fileScanner.hasNextLine()) {
+			words += fileScanner.nextLine() + "\n";
+		}
+		
+		return words;
+	}
+	
+	public void PrintSet() {
+		for (String i: wordList) {
+			System.out.println(i);
+		}
 	}
 }
