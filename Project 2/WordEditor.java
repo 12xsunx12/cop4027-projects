@@ -21,25 +21,28 @@ import javafx.stage.Stage;
 public class WordEditor extends Application {
 	
 	// The physical window everything will go inside of
-	Scene mainScene;
+	private Scene mainScene;
 	
 	// Layout I am using set as a constant
-	BorderPane root;
+	private BorderPane root;
 	
 	// Creates a menu bar at the top
-	MenuBar menuBar;
+	private MenuBar menuBar;
 	
 	// A menu option that goes inside the menuBar
-	Menu menuFile;
+	private Menu menuFile;
 	
 	// Items that go inside of a Menu object; drop down menu items
-	MenuItem newItem, openItem, saveItem, exitItem;
+	private MenuItem newItem, openItem, saveItem, exitItem;
 	
 	// File Chooser used to select files
-	FileChooser fileChooser;
+	private FileChooser fileChooser;
 	
 	// TextArea creates a place to type / input
-	TextArea textArea;
+	private TextArea textArea;
+	
+	// Dictionary; word list used for spell-checking
+	private Dictionary dictionary;
 	
 	@Override
 	public void start(Stage mainStage) {
@@ -50,6 +53,7 @@ public class WordEditor extends Application {
 		menuFile = new Menu("File");	
 		textArea = new TextArea();
 		fileChooser = new FileChooser();
+		dictionary = new Dictionary();
 		
 		// Configuring the text area
 		textArea.setWrapText(true);
@@ -58,38 +62,19 @@ public class WordEditor extends Application {
 		
         // Configurnig the fileChooser
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        fileChooser.setInitialDirectory(new File("/home/sun/eclipse-workspace/ACP_2_Project/src"));                
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));                
 		
 		// Creating menu items + Event handling
-		newItem = createItem("New", new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent event) {
-				textArea.clear();
-			}
-		});
+		newItem = createNewItem("New");
 		newItem.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
 		
-		openItem = createItem("Open", new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent event) {
-				openFile(mainStage);
-			}
-		});
+		openItem = createOpenItem("Open", mainStage);
 		openItem.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
 		
-		saveItem = createItem("Save", new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent event) {
-				File file = fileChooser.showSaveDialog(mainStage);
-				if (file != null) {
-					saveTextToFile(textArea.getText(), file);
-				}
-			}
-		});
+		saveItem = createSaveItem("Save", mainStage);
 		saveItem.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
 		
-		exitItem = createItem("Exit", new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent event) {
-				System.exit(0);
-			}
-		});
+		exitItem = createExitItem("Exit");
 		exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
         
 		// Add items to menu(s)
@@ -106,9 +91,46 @@ public class WordEditor extends Application {
 		mainStage.show();
 	}
 	
-	private MenuItem createItem(String name, EventHandler<ActionEvent> action) {
+	private MenuItem createNewItem(String name) {
 		MenuItem item = new MenuItem(name);
-		item.setOnAction(action);
+		item.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent event) {
+				textArea.clear();
+			}
+		});
+		return item;
+	}
+	
+	private MenuItem createOpenItem(String name, Stage mainStage) {
+		MenuItem item = new MenuItem(name);
+		item.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent event) {
+				openFile(mainStage);
+			}
+		});
+		return item;
+	}
+	
+	private MenuItem createSaveItem(String name, Stage mainStage) {
+		MenuItem item = new MenuItem(name);
+		item.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent event) {
+				File file = fileChooser.showSaveDialog(mainStage);
+				if (file != null) {
+					saveTextToFile(textArea.getText(), file);
+				}
+			}
+		});
+		return item;
+	}
+	
+	private MenuItem createExitItem(String name) {
+		MenuItem item = new MenuItem(name);
+		item.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent event) {
+				System.exit(0);
+			}
+		});
 		return item;
 	}
 	
