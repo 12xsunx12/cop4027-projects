@@ -43,8 +43,7 @@ public class WordEditor extends Application {
 	// TextArea creates a place to type / input
 	private TextArea textArea;
 	
-	// Dictionary; word list used for spell-checking
-	private Dictionary dictionary;
+	private SpellChecker sc;
 	
 	@Override
 	public void start(Stage mainStage) {
@@ -56,7 +55,7 @@ public class WordEditor extends Application {
 		menuFile = new Menu("File");	
 		textArea = new TextArea();
 		fileChooser = new FileChooser();
-		dictionary = new Dictionary();
+		sc = new SpellChecker();
 		
 		// Configuring the text area
 		textArea.setWrapText(true);

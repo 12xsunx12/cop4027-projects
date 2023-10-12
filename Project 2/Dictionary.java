@@ -11,13 +11,11 @@ public class Dictionary {
 	
 	public Dictionary() {
 		file = new File("Words.txt");
-		
 		try {
 			fileScanner = new Scanner(file);
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-		
 		wordList = AddWordListToSet();
 	}
 	
@@ -27,12 +25,14 @@ public class Dictionary {
 	
 	public String GetWordListString() {
 		String words = "";
-		
 		while(fileScanner.hasNextLine()) {
 			words += fileScanner.nextLine() + "\n";
 		}
-		
 		return words;
+	}
+	
+	public boolean Contains(String word) {
+		return wordList.contains(word);
 	}
 	
 	public void PrintSet() {
@@ -43,11 +43,9 @@ public class Dictionary {
 	
 	private Set<String> AddWordListToSet() {
 		Set<String> words = new HashSet<String>();
-		
 		while(fileScanner.hasNextLine()) {
 			words.add(fileScanner.nextLine());
 		}
-		
 		return words;
 	}
 }
