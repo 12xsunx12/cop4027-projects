@@ -8,7 +8,11 @@ public class SpellChecker {
 	}
 	
 	public String CheckSpelling(String word) {
-		return MissingLetter(word) + "\n" + ExtraLetter(word) + "\n" + ReversedLetter(word);
+		if (dictionary.Contains(word)) {
+			return "-1";
+		} else {
+			return MissingLetter(word) + "\n" + ExtraLetter(word) + "\n" + ReversedLetter(word);
+		}
 	}
 	
 	public String MissingLetter(String inputWord) {
@@ -25,11 +29,11 @@ public class SpellChecker {
                     }
                 }
                 if (mismatchCount == 1) {
-                    return word;
+                    return "Missing Letter: " + word;
                 }
             }
         }
-		return "NA - Missing Letter";
+		return "Missing Letter: NA";
 	}
 	
 	public String ExtraLetter(String inputWord) {
@@ -46,20 +50,24 @@ public class SpellChecker {
                     }
                 }
                 if (mismatchCount <= 1) {
-                    return word;
+                    return "Extra letter; "+ word;
                 }
             }
         }
-		return "NA - Extra letter";
+		return "Extra Letter: NA";
 	}
 	
 	public String ReversedLetter(String inputWord) {
 		for (String word : dictionary.GetWordListSet()) {
 			if (ReversedHelper(word, inputWord)) {
-				return word;
+				return "Reversed Letter: " + word;
 			}
 		}
-		return "NA - Reversed Letter";
+		return "Reversed Letter: NA";
+	}
+	
+	public Dictionary GetDictionary() {
+		return dictionary;
 	}
 	
 	private boolean ReversedHelper(String word1, String word2) {

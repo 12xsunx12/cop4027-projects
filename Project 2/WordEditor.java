@@ -1,17 +1,16 @@
 import javafx.scene.control.TextArea;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -32,10 +31,10 @@ public class WordEditor extends Application {
 	private MenuBar menuBar;
 	
 	// A menu option that goes inside the menuBar
-	private Menu menuFile;
+	private Menu menuFile, menuSpellCheck;
 	
 	// Items that go inside of a Menu object; drop down menu items
-	private MenuItem newItem, openItem, saveItem, exitItem;
+	private MenuItem newItem, openItem, saveItem, exitItem, spellCheckItem;
 	
 	// File Chooser used to select files
 	private FileChooser fileChooser;
@@ -43,7 +42,7 @@ public class WordEditor extends Application {
 	// TextArea creates a place to type / input
 	private TextArea textArea;
 	
-	private SpellChecker sc;
+	private SpellChecker spellChecker;
 	
 	@Override
 	public void start(Stage mainStage) {
@@ -52,10 +51,11 @@ public class WordEditor extends Application {
 		// Creating variables
 		root = new BorderPane();
 		menuBar = new MenuBar();
-		menuFile = new Menu("File");	
+		menuFile = new Menu("File");
+		menuSpellCheck = new Menu("Check Spelling");
 		textArea = new TextArea();
 		fileChooser = new FileChooser();
-		sc = new SpellChecker();
+		spellChecker = new SpellChecker();
 		
 		// Configuring the text area
 		textArea.setWrapText(true);
@@ -78,10 +78,14 @@ public class WordEditor extends Application {
 		
 		exitItem = CreateExitItem("Exit");
 		exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
+		
+		// Creating Spell Check menu button + logic
+		spellCheckItem = CreateSpellCheckMenu("Check Spelling", mainStage);
         
 		// Add items to menu(s)
 		menuFile.getItems().addAll(newItem, openItem, saveItem, exitItem);
-		menuBar.getMenus().addAll(menuFile);
+		menuSpellCheck.getItems().addAll(spellCheckItem);
+		menuBar.getMenus().addAll(menuFile,menuSpellCheck);
 		
 		// Add to scene
 		root.setTop(menuBar);
@@ -131,6 +135,32 @@ public class WordEditor extends Application {
 		item.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent event) {
 				System.exit(0);
+			}
+		});
+		return item;
+	}
+	
+	private MenuItem CreateSpellCheckMenu(String name, Stage mainStage) {
+		MenuItem item = new Menu(name);
+		item.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent event) {
+				int counter = 0;
+				String[] wordsInTextArea = textArea.getText().toLowerCase().trim().split(" ");
+				for (int i = 0; i < wordsInTextArea.length; i++) {
+					if (!(spellChecker.CheckSpelling(wordsInTextArea[i]).equals("-1"))) {
+						Alert alert = new Alert(AlertType.INFORMATION, spellChecker.CheckSpelling(wordsInTextArea[i]));
+						alert.setHeaderText("Mispelled Word: " + wordsInTextArea[i]);
+						alert.showAndWait();
+					} else {
+						counter++;
+					}
+				}
+				
+				if (counter == wordsInTextArea.length) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setHeaderText("All words spelled correctly!");
+					alert.showAndWait();
+				}
 			}
 		});
 		return item;
