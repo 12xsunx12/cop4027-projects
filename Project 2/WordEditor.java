@@ -1,3 +1,11 @@
+/* @author: Regan O'Donnell
+ * @class: COP4027
+ * @professor: J. Coffey
+ * 
+ * Project 2
+ * 
+ */
+
 import javafx.scene.control.TextArea;
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,7 +18,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -145,9 +152,9 @@ public class WordEditor extends Application {
 		item.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent event) {
 				int counter = 0;
-				String[] wordsInTextArea = textArea.getText().toLowerCase().trim().split(" ");
+				String[] wordsInTextArea = textArea.getText().toLowerCase().trim().split(" |,|\\.|\n");
 				for (int i = 0; i < wordsInTextArea.length; i++) {
-					if (!(spellChecker.CheckSpelling(wordsInTextArea[i]).equals("-1"))) {
+					if (!(spellChecker.CheckSpelling(wordsInTextArea[i]).equals("-1")) && !(wordsInTextArea[i].equals(""))) {
 						Alert alert = new Alert(AlertType.INFORMATION, spellChecker.CheckSpelling(wordsInTextArea[i]));
 						alert.setHeaderText("Mispelled Word: " + wordsInTextArea[i]);
 						alert.showAndWait();
