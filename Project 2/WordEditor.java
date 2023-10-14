@@ -49,6 +49,7 @@ public class WordEditor extends Application {
 	// TextArea creates a place to type / input
 	private TextArea textArea;
 	
+	// Spell Checker class checks spelling
 	private SpellChecker spellChecker;
 	
 	@Override
