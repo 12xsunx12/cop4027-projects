@@ -3,6 +3,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.scene.image.Image;
 import java.io.File;
@@ -12,19 +13,7 @@ import javafx.stage.Stage;
 public class RaceGui extends Application {
 	private BorderPane root;
 	private HBox buttonPane;
-	private Box horse;
-	
-	private HBox CreateButtonPane() {
-		HBox hbox = new HBox();
-		
-		Button runButton = new Button("Run");
-		Button resetButton = new Button("Reset");
-		Button quitButton = new Button("Quit");
-		
-		hbox.getChildren().addAll(runButton,resetButton,quitButton);
-		
-		return hbox;
-	}
+	private VBox horsePane;
 	
 	private File GetHorseFile() {
 		File horseImageFile = new File("honse.png");
@@ -40,13 +29,29 @@ public class RaceGui extends Application {
 		return new ImageView(CreateHorseImage());
 	}
 	
+	private HBox CreateButtonPane() {
+		HBox hbox = new HBox();
+		
+		Button runButton = new Button("Run");
+		Button resetButton = new Button("Reset");
+		Button quitButton = new Button("Quit");
+		
+		hbox.getChildren().addAll(runButton,resetButton,quitButton);
+		
+		return hbox;
+	}
+	
+	private VBox CreateHorsePane() {
+		
+	}
+	
 	@Override
 	public void start(Stage mainStage) throws Exception {
 		root = new BorderPane();
 		buttonPane = CreateButtonPane();
+		horsePane = new VBox();
 		
 		root.setTop(buttonPane);
-		root.setCenter(horse);
 		
 		//Create Scene, set size, set pane, and make visible
 		Scene mainScene = new Scene(root, 500, 400);
