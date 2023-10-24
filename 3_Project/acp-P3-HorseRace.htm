@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+
+
+
+
+
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <meta name="Author" content="John coffey">
+
+  
+  <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; U) [Netscape]"><title>HorseRace Program</title>
+  
+
+  
+  
+  <style>
+<!--
+div.Section1
+
+
+
+
+	{page:Section1;}
+
+
+
+
+-->
+  </style></head><body>
+<center>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">The University of West Florida <br>
+Department of Computer Science</span></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">Advanced Computer Programming Assignment</span></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">John W. Coffey</span></b></p>
+</center>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b>Program Description:
+Horserace!!! </b></p>
+
+<p>The idea is to create a graphical program using JavaFX that will
+race horses across a window in Java. The program will be an application
+that will instantiate multiple instances of <span style="font-family: monospace;">Horse</span> threads. The
+application will run in a window that will contain three buttons:</p>
+
+<ol>
+
+  <li><tt>[run]</tt></li>
+  <li><tt>[reset]</tt></li>
+  <li><tt>[quit]</tt></li>
+</ol>
+
+<p>A total of 6 horses will run the race.</p>
+
+<p>When the application starts, the horses will be lined up at the
+starting line. When the user clicks the&nbsp; <tt>[run] </tt><span face="Times New Roman" style="font-family: 'Times New Roman';"> <tt> <span face="Times New Roman" style="font-family: 'Times New Roman';">button</span></tt>,
+</span>the
+horses run. Your program will animate their running across the window,
+ultimately declaring a winner. Notice there is literally a race
+condition in this program: You must ensure that the horse
+that&nbsp;crosses the finish line first detects that it has won,
+declares itself the winner, and ensures that the other horses do not
+declare themselves winners, all as an atomic operation. These program statements comprise a <span style="font-style: italic; font-weight: bold;">critical section </span>in the code. Your program
+will need a lock for the critical section of code. The preferred method
+to stop the horses from running would be to use an <span style="font-family: monospace;">InterruptedException</span>. Certainly, you
+will not use the <tt>thread.stop()</tt> method in the Java program to
+stop the other horses from running (for reasons described in
+class).&nbsp; </p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">When a horse crosses
+the finish line, you will declare a winner via a dialog box. The dialog
+box will also report the winning time. The timer
+returns milliseconds which you will convert into seconds and report in
+the dialog box.</p><br>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span style="font-family: monospace;">class TimeTest1 {</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp; public static void main(String[] args) {</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; long startTime = System.currentTimeMillis();</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try{</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread.sleep(1000);</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catch(Exception e) {}</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; long stopTime = System.currentTimeMillis();</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; long elapsedTime = stopTime - startTime;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println("total time = " + elapsedTime);</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp; }</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">}</span><br>
+</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"></p>
+<br>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The user will click the
+dialog to close it. If the user then presses the [<span style="font-family: monospace;">reset</span>] button the horses
+should be redrawn back at the starting line. If the user clicks the [<span style="font-family: monospace;">quit</span>]
+button, the program should terminate. All the buttons should work
+properly. For instance, if the [reset] button is clicked in the
+middleof a run, the race should terminate and the horses should be
+redrawn at the starting line. Be sure your program does not generate
+runtime errors if the buttons are clicked in an odd pattern.</p><p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Please
+review the policy on ACADEMIC MISCONDUCT. This is an<span class="Apple-converted-space">&nbsp;</span><i>individual assignment.</i><span style="font-style: italic;"></span></p>
+
+<p class="MsoNormal" style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; line-height: normal; widows: 1;"><span style="font-weight: bold;">Submission requirements:</span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-weight: bold;"></span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+<div class="gmail-Section1" style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; page: Section1;"><span style="line-height: normal; widows: 1;">1. Compile and run your program one last time before submitting it.<br>2. Rename your Eclipse project folder&nbsp;</span><span style="line-height: normal; widows: 1;">&lt;lastName&gt;</span><span style="line-height: normal; widows: 1;">&lt;firstInitial&gt;</span><span style="line-height: normal; widows: 1;">. If I were submitting project 1, my project folder name would be coffeyj.</span><br><span style="line-height: normal; widows: 1;">Place ALL deliverables in your submission into a folder by the same name.&nbsp;</span><span style="line-height: normal; widows: 1;">That folder should hold:<br></span><ul><li><span style="line-height: normal; widows: 1;">UML class diagram</span></li><li><span style="line-height: normal; widows: 1;">The folder holding your Eclipse project named&nbsp;</span><span style="line-height: normal; widows: 1;">&lt;lastName&gt;</span><span style="line-height: normal; widows: 1;">&lt;firstInitial&gt;</span></li></ul><span style="line-height: normal; widows: 1;">3.
+zip that folder into a .zip file with the SAME NAME. This means that
+inside your zip file, you will have exactly one folder (from the
+example: coffeyj). Inside that folder will be the Eclipse project and
+the other two files.<br>My submission would be structured like this<br></span><span style="line-height: normal; widows: 1;"><span style="font-family: monospace;">- coffeyj.zip&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // the .zip file holding my submission</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; - coffeyj&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // folder for the entire project</span></span></div>
+<div class="gmail-Section1" style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; page: Section1;"><span style="line-height: normal; widows: 1;"><span style="font-family: monospace;">&nbsp;
+&nbsp; -
+coffeyj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// the renamed Eclipse folder</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; &nbsp; - coffeyjUML.jpg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // assumes a .jpg</span><span style="font-family: monospace;"><br>
+</span></span></div>
+<div class="Section1" style="page: Section1; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"><span style="font-family: monospace;"></span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"></span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">4.
+DO NOT make any other folders for documentation or anything else inside
+the main folder. Leave the Eclipse folders as Eclipse made them. Any
+changes simply necessitates more navigation time to get where we need
+to go to grade</span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">5.
+MacOS users - remove the _MacOS_ utility folder if it exists. It just
+takes up space and is not needed for anything we do with your
+submissions.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">6. Login</span><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"><span>&nbsp;</span>into Canvas.</span><span style="color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"></span><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"><span class="Apple-converted-space"><span>&nbsp;</span></span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">Select our course.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">7. Go to the Assignments and choose Project 1.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">8.
+Click the "Submit Assignment" button and upload your .zip file. ALWAYS
+give yourself enough time. If you are trying to submit at 11:57pm on
+your machine, the clock might be off and the dropbox might already be
+closed.</span></div>
+<span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;"></span>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+
+
+
+
+
+
+</body></html>

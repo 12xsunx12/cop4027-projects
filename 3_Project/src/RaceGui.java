@@ -7,6 +7,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.scene.image.Image;
 import java.io.File;
+
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,7 +18,7 @@ public class RaceGui extends Application {
 	private VBox horsePane;
 	
 	private File GetHorseFile() {
-		File horseImageFile = new File("honse.png");
+		File horseImageFile = new File("honse_r.png");
 		if(horseImageFile.exists()) return horseImageFile;
 		else return null;
 	}
@@ -27,6 +29,15 @@ public class RaceGui extends Application {
 	
 	private ImageView CreateHorseImageViewer() {
 		return new ImageView(CreateHorseImage());
+	}
+
+	private VBox CreateHorsePane() {
+		VBox vbox = new VBox();
+		ImageView honse = CreateHorseImageViewer();
+		
+		vbox.getChildren().addAll(honse);
+		
+		return vbox;
 	}
 	
 	private HBox CreateButtonPane() {
@@ -41,17 +52,14 @@ public class RaceGui extends Application {
 		return hbox;
 	}
 	
-	private VBox CreateHorsePane() {
-		
-	}
-	
 	@Override
 	public void start(Stage mainStage) throws Exception {
 		root = new BorderPane();
 		buttonPane = CreateButtonPane();
-		horsePane = new VBox();
+		horsePane = CreateHorsePane();
 		
 		root.setTop(buttonPane);
+		root.setLeft(horsePane);
 		
 		//Create Scene, set size, set pane, and make visible
 		Scene mainScene = new Scene(root, 500, 400);
