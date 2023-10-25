@@ -1,14 +1,9 @@
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
-import javafx.scene.image.Image;
-import java.io.File;
-
-import javafx.animation.AnimationTimer;
+import javafx.scene.canvas.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -17,46 +12,35 @@ public class RaceGui extends Application {
 	private HBox buttonPane;
 	private VBox horsePane;
 	
-	private File GetHorseFile() {
-		File horseImageFile = new File("honse_r.png");
-		if(horseImageFile.exists()) return horseImageFile;
-		else return null;
+	private Canvas horseCanvas;
+	
+	private Canvas CreateHorseCanvas() {
+		Canvas canvas = new Canvas(2000,150);
+		return canvas;
 	}
 	
-	private Image CreateHorseImage() {
-		return new Image(GetHorseFile().toURI().toString());
+	private Canvas DrawHorse() {
+		Canvas canvas = CreateHorseCanvas();
+		GraphicsContext graphic = canvas.getGraphicsContext2D();
+		graphic.fillRect(0, 0, 100, 50);
+		return canvas;
 	}
 	
-	private ImageView CreateHorseImageViewer() {
-		return new ImageView(CreateHorseImage());
-	}
-
-	private VBox CreateHorsePane() {
-		VBox vbox = new VBox();
-		ImageView honse = CreateHorseImageViewer();
-		
-		vbox.getChildren().addAll(honse);
-		
-		return vbox;
-	}
-	
-	private HBox CreateButtonPane() {
-		HBox hbox = new HBox();
-		
-		Button runButton = new Button("Run");
-		Button resetButton = new Button("Reset");
-		Button quitButton = new Button("Quit");
-		
-		hbox.getChildren().addAll(runButton,resetButton,quitButton);
-		
-		return hbox;
+	private Canvas AnimateHorse(Canvas horseCanvas) {
+		GraphicsContext graphic = horseCanvas.getGraphicsContext2D();
+		graphic.clearRect(0, 0, horseCanvas.getWidth(), horseCanvas.getHeight());
+		graphic.translate(10, 0);
+		graphic.fillRect(0, 0, 100, 50);
+		return horseCanvas;
 	}
 	
 	@Override
 	public void start(Stage mainStage) throws Exception {
 		root = new BorderPane();
-		buttonPane = CreateButtonPane();
-		horsePane = CreateHorsePane();
+		horsePane = new VBox();
+		Canvas horse0 = DrawHorse();
+
+		horsePane.getChildren().add(horse0);
 		
 		root.setTop(buttonPane);
 		root.setLeft(horsePane);
