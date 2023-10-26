@@ -4,6 +4,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.canvas.*;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,41 +13,24 @@ public class RaceGui extends Application {
 	private HBox buttonPane;
 	private VBox horsePane;
 	
-	private Canvas horseCanvas;
-	
-	private Canvas CreateHorseCanvas() {
-		Canvas canvas = new Canvas(2000,150);
-		return canvas;
-	}
-	
-	private Canvas DrawHorse() {
-		Canvas canvas = CreateHorseCanvas();
-		GraphicsContext graphic = canvas.getGraphicsContext2D();
-		graphic.fillRect(0, 0, 100, 50);
-		return canvas;
-	}
-	
-	private Canvas AnimateHorse(Canvas horseCanvas) {
-		GraphicsContext graphic = horseCanvas.getGraphicsContext2D();
-		graphic.clearRect(0, 0, horseCanvas.getWidth(), horseCanvas.getHeight());
-		graphic.translate(10, 0);
-		graphic.fillRect(0, 0, 100, 50);
-		return horseCanvas;
-	}
-	
 	@Override
 	public void start(Stage mainStage) throws Exception {
 		root = new BorderPane();
+		buttonPane = new HBox();
 		horsePane = new VBox();
-		Canvas horse0 = DrawHorse();
+		Horse horse = new Horse();
+		Horse horse1 = new Horse();
 
-		horsePane.getChildren().add(horse0);
+		horsePane.getChildren().addAll(horse,horse1);
 		
-		root.setTop(buttonPane);
+		//root.setTop(buttonPane);
 		root.setLeft(horsePane);
 		
+		horse.AnimateHorse();
+		horse1.AnimateHorse();
+		
 		//Create Scene, set size, set pane, and make visible
-		Scene mainScene = new Scene(root, 500, 400);
+		Scene mainScene = new Scene(root, 1000, 400);
 		mainStage.setScene(mainScene);
 		mainStage.show();
 	}
