@@ -1,3 +1,10 @@
+/*
+ * @author: Regan O'Donnell
+ * @class: COP4027
+ * @professor: John Coffey
+ * @date of sub: 10/29/2023
+ */
+
 public class HorseRace {
 	private Horse horse1, horse2, horse3, horse4, horse5, horse6;
 	

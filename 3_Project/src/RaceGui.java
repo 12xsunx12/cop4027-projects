@@ -1,3 +1,10 @@
+/*
+ * @author: Regan O'Donnell
+ * @class: COP4027
+ * @professor: John Coffey
+ * @date of sub: 10/29/2023
+ */
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
