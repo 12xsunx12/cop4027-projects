@@ -27,12 +27,32 @@ public class Horse extends Canvas {
 		gc.clearRect(0, 0, this.getWidth(), this.getHeight());
 	}
 	
-	private int getRandomNumber() {
+	private int GetRandomNumber() {
 		int maxValue = 30;
 		int minValue = 1;
         Random random = new Random();
         return random.nextInt((maxValue - minValue) + 1) + minValue;
     }
+	
+	// Checks to see if a horse has crossed the finish line
+		private boolean HasWon() {
+		    if (xPos > finishLine && animationRunning.get()) {
+		        animationRunning.set(false);
+		        DisplayWinnerMessage();
+		        return true;
+		    } else {
+		        return false;
+		    }
+		}
+
+		// Dialog box was crashing the program. After multiple attempts to fix it I just defaulted with a System.out.println
+		private void DisplayWinnerMessage() { 
+		    int horseNumber = Arrays.asList(horseRace.GetHorses()).indexOf(this) + 1;
+		    double elapsedTime = (((double)stopTime / 1000) - ((double)startTime / 1000));
+		    elapsedTime = Math.round(elapsedTime * 1000);
+		    elapsedTime /= 1000;
+		    System.out.println("Horse " + horseNumber + " is the winner!\nTime: " + elapsedTime);
+		}
 	
 	public Horse(HorseRace horseRace) {
 		super(1000, 100);
@@ -49,14 +69,14 @@ public class Horse extends Canvas {
 		startTime = System.currentTimeMillis();
 		setTranslateX(xPos);
 		DrawHorse();
-		xPos += getRandomNumber();
+		xPos += GetRandomNumber();
 		if (animationThread != null && animationThread.isAlive()) return; // if thread does exist, and, a thread is running somewhere in memory: do not start animation. This line keeps a lot of stuff from crashing.
 		animationRunning.set(true);;
 		animationThread = new Thread(() -> { // replace code in run() with lambda exp.
 			while (animationRunning.get()) {
 				if (xPos > finishLine + 2) HasWon();
 				stopTime = System.currentTimeMillis();
-				xPos += getRandomNumber(); // horse will move forward by a number 1 - 30
+				xPos += GetRandomNumber(); // horse will move forward by a number 1 - 30
 				ClearCanvas();
 				DrawHorse(); // Draw the horse
 				try {Thread.sleep(150);} catch (InterruptedException e) {Thread.currentThread().interrupt(); break;} 
@@ -75,26 +95,6 @@ public class Horse extends Canvas {
 		xPos = 0;
 		ClearCanvas();
 		DrawHorse();
-	}
-	
-	// Checks to see if a horse has crossed the finish line
-	private boolean HasWon() {
-	    if (xPos > finishLine && animationRunning.get()) {
-	        animationRunning.set(false);
-	        displayWinnerMessage();
-	        return true;
-	    } else {
-	        return false;
-	    }
-	}
-
-	// Dialog box was crashing the program. After multiple attempts to fix it I just defaulted with a System.out.println
-	private void displayWinnerMessage() { 
-	    int horseNumber = Arrays.asList(horseRace.GetHorses()).indexOf(this) + 1;
-	    double elapsedTime = (((double)stopTime / 1000) - ((double)startTime / 1000));
-	    elapsedTime = Math.round(elapsedTime * 1000);
-	    elapsedTime /= 1000;
-	    System.out.println("Horse " + horseNumber + " is the winner!\nTime: " + elapsedTime);
 	}
 }
 
