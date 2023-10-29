@@ -13,6 +13,8 @@ public class RaceGui extends Application {
 	private HBox buttonPane;
 	private VBox horsePane;
 	private HorseRace horseRace;
+	private Button startButton, resetButton, quitButton;
+	private Stage mainStage;
 	
 	private Button CreateStartButton() {
 		Button button = new Button("Start Race");
@@ -32,6 +34,11 @@ public class RaceGui extends Application {
 		
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent a) {
+				horseRace.ResetRace();
+				startButton.setDisable(false);
+	            mainStage.close();
+	            Stage newStage = new Stage();
+	            try {start(newStage);} catch (Exception e) {e.printStackTrace();}
 			}
 		});
 		
@@ -43,6 +50,7 @@ public class RaceGui extends Application {
 		
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent a) {
+				System.exit(0);
 			}
 		});
 		
@@ -52,9 +60,9 @@ public class RaceGui extends Application {
 	private HBox CreateButtonPane() {
 		HBox hbox = new HBox();
 		
-		Button startButton = CreateStartButton();
-		Button resetButton = CreateResetButton();
-		Button quitButton = CreateQuitButton();
+		startButton = CreateStartButton();
+		resetButton = CreateResetButton();
+		quitButton = CreateQuitButton();
 		
 		hbox.getChildren().addAll(startButton,resetButton,quitButton);
 		
@@ -63,6 +71,7 @@ public class RaceGui extends Application {
 	
 	@Override
 	public void start(Stage mainStage) throws Exception {
+		this.mainStage = mainStage;
 		root = new BorderPane();
 		buttonPane = CreateButtonPane();
 		horsePane = new VBox();
