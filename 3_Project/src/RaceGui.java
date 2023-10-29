@@ -1,10 +1,8 @@
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.canvas.*;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,40 +10,43 @@ public class RaceGui extends Application {
 	private BorderPane root;
 	private HBox buttonPane;
 	private VBox horsePane;
+	private HorseRace horseRace;
+	
+	private HBox CreateButtonPane() {
+		HBox hbox = new HBox();
+		
+		Button runButton = new Button("Run");
+		Button resetButton = new Button("Reset");
+		Button quitButton = new Button("Quit");
+		
+		hbox.getChildren().addAll(runButton,resetButton,quitButton);
+		
+		return hbox;
+	}
 	
 	@Override
 	public void start(Stage mainStage) throws Exception {
 		root = new BorderPane();
-		buttonPane = new HBox();
+		buttonPane = CreateButtonPane();
 		horsePane = new VBox();
-		Horse horse1 = new Horse();
-		Horse horse2 = new Horse();
-		Horse horse3 = new Horse();
-		Horse horse4 = new Horse();
-		Horse horse5 = new Horse();
-		Horse horse6 = new Horse();
+		horseRace = new HorseRace();
 
-		horsePane.getChildren().addAll(horse1,horse2,horse3,horse4,horse5,horse6);
+		// Add horses to pane
+		Horse[] horses = horseRace.GetHorses();
+		for (int i = 0; i < horses.length; i++) {
+			horsePane.getChildren().add(horses[i]);
+		}
 		
 		//root.setTop(buttonPane);
+		root.setTop(buttonPane);
 		root.setLeft(horsePane);
+
+		// Start the race
+		horseRace.StartRace();
 		
-		Thread horse1_t = new Thread(horse1);
-		Thread horse2_t = new Thread(horse2);
-		Thread horse3_t = new Thread(horse3);
-		Thread horse4_t = new Thread(horse4);
-		Thread horse5_t = new Thread(horse5);
-		Thread horse6_t = new Thread(horse6);
-		
-		horse1_t.start();
-		horse2_t.start();
-		horse3_t.start();
-		horse4_t.start();
-		horse5_t.start();
-		horse6_t.start();
 		
 		//Create Scene, set size, set pane, and make visible
-		Scene mainScene = new Scene(root, 1000, 400);
+		Scene mainScene = new Scene(root, 1000, 600);
 		mainStage.setScene(mainScene);
 		mainStage.show();
 	}
