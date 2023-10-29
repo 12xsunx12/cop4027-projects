@@ -4,6 +4,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
 public class RaceGui extends Application {
@@ -12,14 +14,49 @@ public class RaceGui extends Application {
 	private VBox horsePane;
 	private HorseRace horseRace;
 	
+	private Button CreateStartButton() {
+		Button button = new Button("Start Race");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent a) {
+				horseRace.StartRace();
+				button.setDisable(true);
+			}
+		});
+		
+		return button;
+	}
+	
+	private Button CreateResetButton() {
+		Button button = new Button("Reset");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent a) {
+			}
+		});
+		
+		return button;
+	}
+	
+	private Button CreateQuitButton() {
+		Button button = new Button("Quit");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent a) {
+			}
+		});
+		
+		return button;
+	}
+	
 	private HBox CreateButtonPane() {
 		HBox hbox = new HBox();
 		
-		Button runButton = new Button("Run");
-		Button resetButton = new Button("Reset");
-		Button quitButton = new Button("Quit");
+		Button startButton = CreateStartButton();
+		Button resetButton = CreateResetButton();
+		Button quitButton = CreateQuitButton();
 		
-		hbox.getChildren().addAll(runButton,resetButton,quitButton);
+		hbox.getChildren().addAll(startButton,resetButton,quitButton);
 		
 		return hbox;
 	}
@@ -41,9 +78,6 @@ public class RaceGui extends Application {
 		root.setTop(buttonPane);
 		root.setLeft(horsePane);
 
-		// Start the race
-		horseRace.StartRace();
-		
 		
 		//Create Scene, set size, set pane, and make visible
 		Scene mainScene = new Scene(root, 1000, 600);
