@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+
+
+
+
+
+
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <meta name="Author" content="John coffey">
+
+  
+  <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; U) [Netscape]"><title>JavaFX Editor Program</title>
+  
+
+  
+  
+  <style>
+<!--
+div.Section1
+
+
+
+
+	{page:Section1;}
+
+
+
+
+-->
+  </style></head><body>
+<center>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">The University of West Florida <br>
+Department of Computer Science</span></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">Advanced Computer Programming Assignment</span></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><span size="4" style="font-size: large;">John W. Coffey</span></b></p>
+</center>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b>Program Description:
+Editor and Spelling Checker in JavaFX<br>
+</b></p>
+
+<p>We will create a graphical editor and spell checker program. The interface will
+look similar to this:</p>
+
+<p><img src="SpellerGUI.png" alt="Speller GUI" title="Speller GUI"></p>
+
+<p>The File menu has the three items shown. Your program should be able
+to read a file from disk with the current directory set to the
+directory where your program is located. Save should be able to save
+the current text in the window back to the file from which it was read.
+if no file was opened, your program must provide a save dialog to get
+the location in which to save the file, defaulting to the directory
+where your progam is located. The Edit menu has one menu item: Spell
+Check.This program will
+use "Words.txt" as a dictionary
+to look up properly spelled words. When the program starts, it will
+open the dictionary file (name it "<span style="font-size: 12pt;"><tt><span size="+1">Words.txt</span></tt></span>").
+You will hash
+the words into a hash table container chosen from the choices available
+in the Java libraries.</p>
+
+<p>Your program will have a menu item to open an input file and place
+it into a JavaFX TextArea in a window.&nbsp;When the checking proceeds, you
+will extract a word from the&nbsp;text to be checked and find out if
+the word is in the dictionary. You will continue this process until
+you have checked all the words in the file. Each time you find a word
+that you cannot match in the dictionary, you will let the user know and
+you will attempt to generate a list of suggested words. You will
+generate the list by assembling similar words via&nbsp;three methods:</p>
+
+<ol>
+
+  <li>One letter missing. You assume that one letter has been left out
+of
+the word. You can assemble new words to check by adding letters <b>a..z</b>
+in each of the positions in the word from the start to the end of the
+word.</li>
+  <li>One letter added. You assume the word has an extra letter. You
+scan
+through the word deleting each of the letters in turn, and looking up
+the word formed by the remaining letters.</li>
+  <li>Two letters reversed. You swap letters in positions <b>0..1,
+1..2, 2..3, ... , n-2..n-1, </b>to form new words which you look up.</li>
+</ol>
+
+<p>Each time you find a legal word from any of the&nbsp;three methods,
+you add it to the suggestion list, which you present to the user in a
+dialog box. You must present the dialog box for each misspelled word,
+and pause the program until the user has closed the dialog. When the
+user closes the dialog box, move on to the next misspelled word. If you
+cannot identify
+any suggestions for a given word, let the user know there are none via
+the dialog box.</p>
+
+<p><strong>User Interaction</strong></p>
+
+<p>All output from the spell checker should appear in a series of dialog boxes. You
+are not required to allow the user to select the proper word from the
+dialog and place it in the original text, although this would be an
+excellent extension to the program. If the user modifies the text
+manually and reruns the spell checker, the revised results should be
+checked.</p>
+<p>Note: YOur program SHOULD NOT ask the user to load the dictionary file. Think about a real-world application.<br>
+</p>
+
+
+<p><b>Example file:</b></p>
+
+<p style="font-family: monospace;">Hello. My plan is to hav a test fiile that has UPPer and LOWER case
+words. All trhee cises of misspellings will be represented. The file
+will encompass more than one line and will have no other puncktuation
+than commas, and the dot at the end of a line.</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b>Deliverables</b></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">You will submit all the usual
+things: <br>
+1. UML class diagram.&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">2. A User's manual for
+your program <span style="font-style: italic;">which tells me how to
+run it and any features that are not implemented.</span><br>
+3. Your Eclipse project <br>
+</p>
+
+
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">4. Your dictionary file</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Please review the
+policy on Academic dishonesty.</p>
+
+<div class="Section1">
+<p class="MsoNormal" style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<div class="Section1"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; line-height: normal; widows: 1;"><span style="font-weight: bold;">Submission requirements:</span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-weight: bold;"></span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+<div class="gmail-Section1" style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; page: Section1;"><span style="line-height: normal; widows: 1;">1. Compile and run your program one last time before submitting it.<br>2. Rename your Eclipse project folder&nbsp;</span><span style="line-height: normal; widows: 1;">&lt;lastName&gt;</span><span style="line-height: normal; widows: 1;">&lt;firstInitial&gt;</span><span style="line-height: normal; widows: 1;">. My project folder name would be <span style="font-family: monospace;">coffeyj</span>.</span><br><span style="line-height: normal; widows: 1;">Place ALL deliverables in your submission into a folder by the same name.&nbsp;</span><span style="line-height: normal; widows: 1;">That folder should hold:<br></span><ul><li><span style="line-height: normal; widows: 1;">UML class diagram</span></li><li><span style="line-height: normal; widows: 1;">User's manual</span></li><li><span style="line-height: normal; widows: 1;">The folder holding your Eclipse project named<span style="font-family: monospace;">&nbsp;</span></span><span style="line-height: normal; widows: 1; font-family: monospace;">&lt;lastName&gt;&lt;firstInitial&gt;</span></li></ul><span style="line-height: normal; widows: 1;">3.
+zip that folder into a .zip file with the SAME NAME. This means that
+inside your zip file, you will have exactly one folder (from the
+example: coffeyj). Inside that folder will be the Eclipse project and
+the other two files.<br>My submission would be structured like this<br></span><span style="line-height: normal; widows: 1;"><span style="font-family: monospace;">- coffeyj.zip&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // the .zip file holding my submission</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; - coffeyj&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // folder for the entire project</span></span></div>
+<div class="gmail-Section1" style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; page: Section1;"><span style="line-height: normal; widows: 1;"><span style="font-family: monospace;">&nbsp;
+&nbsp; -
+coffeyj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// the renamed Eclipse folder</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; &nbsp; - coffeyjUML.jpg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // assumes a .jpg</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; &nbsp; - coffeyjUsersManual.docx&nbsp; // user's manual</span></span></div>
+<div class="Section1" style="page: Section1; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"><span style="font-family: monospace;"></span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"></span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">4.
+DO NOT make any other folders for documentation or anything else inside
+the main folder. Leave the Eclipse folders as Eclipse made them. Any
+changes simply necessitates more navigation time to get where we need
+to go to grade</span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">5.
+MacOS users - remove the _MacOS_ utility folder if it exists. It just
+takes up space and is not needed for anything we do with your
+submissions.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">6. Login</span><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"><span>&nbsp;</span>into Canvas.</span><span style="color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"></span><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;"><span class="Apple-converted-space"><span>&nbsp;</span></span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">Select our course.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">7. Go to the Assignments and choose Project 2.</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; float: none; display: inline ! important;">8.
+Click the "Submit Assignment" button and upload your .zip file. ALWAYS
+give yourself enough time. If you are trying to submit at 11:57pm on
+your machine, the clock might be off and the dropbox might already be
+closed.</span></div>
+<span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; display: inline ! important; float: none;"></span>
+<p style="margin-right: 0in; margin-left: 0in; font-size: medium; font-family: 'Times New Roman',serif; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px;">Please
+review the policy on ACADEMIC MISCONDUCT. This is an<span class="Apple-converted-space">&nbsp;</span><i>individual assignment.</i></p>
+</div>
+</div>
+
+</body></html>
