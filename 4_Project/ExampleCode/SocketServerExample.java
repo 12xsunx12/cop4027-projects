@@ -7,12 +7,12 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SocketServer extends Thread {
+public class SocketServerExample extends Thread {
     public static final int PORT_NUMBER = 8081;
 
-    protected Socket socket;
+    protected Socket socket; // a "socket" is an endpoint to send or recieve data between two computers using TCP/IP protocols. They use InputStream and OutputStream to read/write to each other.
 
-    private SocketServer(Socket socket) {
+    private SocketServerExample(Socket socket) {
         this.socket = socket;
         System.out.println("New client connected from " + socket.getInetAddress().getHostAddress());
         start();
@@ -46,16 +46,16 @@ public class SocketServer extends Thread {
     }
 
     public static void main(String[] args) {
-        System.out.println("SocketServer Example");
+        System.out.println("SocketServerExample Example");
         ServerSocket server = null;
         try {
             server = new ServerSocket(PORT_NUMBER);
             while (true) {
                 /**
-                 * create a new {@link SocketServer} object for each connection
+                 * create a new {@link SocketServerExample} object for each connection
                  * this will allow multiple client connections
                  */
-                new SocketServer(server.accept());
+                new SocketServerExample(server.accept());
             }
         } catch (IOException ex) {
             System.out.println("Unable to start server.");

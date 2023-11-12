@@ -8,15 +8,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client {
+public class ClientExample {
 
     public static void main(String args[]) {
         String host = "127.0.0.1";
         int port = 8081;
-        new Client(host, port);
+        new ClientExample(host, port);
     }
 
-    public Client(String host, int port) {
+    public ClientExample(String host, int port) {
         try {
             String serverHostname = new String("127.0.0.1");
 
