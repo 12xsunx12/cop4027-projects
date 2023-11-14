@@ -19,6 +19,8 @@ public class Player {
 	private BufferedReader readerClient; // Reads messages from YOU, not the server, but whatever you type in the terminal
 	private PrintWriter writer; // Automatically produces formatted text. Essentially a more fancy ouputStream
 	
+	private int[][] board; // the tictactoe board
+	
 	/*
 	 * Try to create an endpoint (socket) between Client and Server
 	 * This connection is then set as our private 'socket' object
@@ -89,6 +91,13 @@ public class Player {
 	public Player() {
 		establishConnection();
 		establishCommmunication();
+		board = new int[3][3];
+		
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				board[i][j] = 0;
+			}
+		}
 	}
 	
 	/*
@@ -121,17 +130,65 @@ public class Player {
 	public void write(String message) {
 		writer.println(message);
 	}
+	
+	/*
+	 * Draw the board in the terminal
+	 */
+	public void drawBoard() {
+		int currentSlot = 0;
+		
+		System.out.print("\n\n\n");
+		
+		for (int i = 0; i < 3; i++) {
+			System.out.print("\n");
+			for (int j = 0; j < 3; j++) {
+				currentSlot = board[i][j];
+				
+				if (currentSlot == 0) {
+					System.out.print("E  ");
+				} else if (currentSlot == 1) {
+					System.out.print("O  ");
+				} else if (currentSlot == 2) {
+					System.out.print("X  ");
+				}
+			}
+		}
+	}
+	
+	/*
+	 * Update the board with the move made by either client or player. This method will place an 'X' or 'O' in the board
+	 */
+	public void updateBoard(String move, boolean clientOrServer) {
+		int column = move.trim().charAt(0) - '0';
+		int row = move.trim().charAt(1) - '0';
+		// client
+		if (clientOrServer == false) {
+			board[column][row] = 1;
+		} else {
+			board[column][row] = 2;
+		}
+	}
 
 	public static void main(String[] args) {
 	    Player client = new Player();
+	    String playerName = "";
+	    String messageTooServer = "";
+	    String messageFromServer = "";
+	    
+	    System.out.print("Please enter a player name: ");
+	    playerName = client.readClient();
 	    
 	    while (true) {
-	        String messageToServer = client.readClient();
-	        System.out.println("You said: " + messageToServer);
-	        client.write(messageToServer);
-	        String messageFromServer = client.readServer();
-	        
-	        System.out.println("Server said: " + messageFromServer);
+	    	messageFromServer = client.readServer();
+	    	System.out.print("Server: " + messageFromServer);
+	    	client.updateBoard(messageFromServer, true);
+	    	client.drawBoard();
+	    	System.out.print(playerName + ": ");
+	    	messageTooServer = client.readClient();
+	    	client.updateBoard(messageTooServer, false);
+	    	client.drawBoard();
+	    	client.write(messageTooServer);
+	    	client.writer.flush();
 	    }
 	}
 }

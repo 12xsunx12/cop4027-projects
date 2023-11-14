@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 
 public class Server implements Runnable {
 	private final int PORT_NUMBER = 9999; // Port that the client will try to connect on
@@ -39,6 +40,7 @@ public class Server implements Runnable {
 	 */
 	private class ClientHandler implements Runnable {
 		private Socket clientSocket;
+		private int[][] board; // the tictactoe board
 		
 		/*
 		 * Create the buffered reader needed for client -> server (input)
@@ -65,10 +67,66 @@ public class Server implements Runnable {
 		}
 		
 		/*
+		 * returns a random number 0(inclusive) - 3(exclusive)
+		 */
+		private String generateRandomMove() {
+	        Random rand = new Random();
+	        String column = Integer.toString(rand.nextInt(3));
+	        String row = Integer.toString(rand.nextInt(3));
+	        return column + row;
+	    }
+		
+		/*
 		 * Constructor
 		 */
 		public ClientHandler(Socket clientSocket) {
 			this.clientSocket = clientSocket;
+			
+			board = new int[3][3];
+			
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					board[i][j] = 0;
+				}
+			}
+		}
+		
+		/*
+		 * Draw the board in the terminal
+		 */
+		public void drawBoard() {
+			int currentSlot = 0;
+			
+			System.out.print("\n\n\n");
+			
+			for (int i = 0; i < 3; i++) {
+				System.out.print("\n");
+				for (int j = 0; j < 3; j++) {
+					currentSlot = board[i][j];
+					
+					if (currentSlot == 0) {
+						System.out.print("E  ");
+					} else if (currentSlot == 1) {
+						System.out.print("O  ");
+					} else if (currentSlot == 2) {
+						System.out.print("X  ");
+					}
+				}
+			}
+		}
+		
+		/*
+		 * Update the board with the move made by either client or player. This method will place an 'X' or 'O' in the board
+		 */
+		public void updateBoard(String move, boolean clientOrServer) {
+			int column = move.trim().charAt(0) - '0';
+			int row = move.trim().charAt(1) - '0';
+			// client
+			if (clientOrServer == false) {
+				board[column][row] = 1;
+			} else {
+				board[column][row] = 2;
+			}
 		}
 		
 		/*
@@ -81,10 +139,17 @@ public class Server implements Runnable {
 		        PrintWriter clientWriter = createPrintWriter();
 		        
 		        String messageFromClient = "";
-		        while ((messageFromClient = clientReader.readLine()) != null) {
-		            System.out.println("Received from client: " + messageFromClient);
-		            clientWriter.println(messageFromClient);
-		            clientWriter.flush(); // Flush the output stream
+		        String messageTooClient = "";
+		        
+		        while (true) {
+		        	messageTooClient = generateRandomMove();
+		        	clientWriter.println(messageTooClient);
+		        	clientWriter.flush();
+		        	updateBoard(messageTooClient, true);
+		        	drawBoard();
+		        	messageFromClient = clientReader.readLine();
+		        	updateBoard(messageFromClient, false);
+		        	drawBoard();
 		        }
 		    } catch (IOException e) {
 		        System.out.println(e.getMessage());
