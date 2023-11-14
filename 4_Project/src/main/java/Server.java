@@ -136,28 +136,6 @@ public class Server implements Runnable {
 		}
 		
 		/*
-		 * Checks to see if any of the rows or columns have three in a row, if so, returns true
-		 */
-		private boolean checkWinner(int player) {
-		    // Check rows and columns
-		    for (int i = 0; i < 3; i++) {
-		        if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) || 
-		            (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
-		            return true;
-		        }
-		    }
-		    
-		    // Check diagonals
-		    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) || 
-		        (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
-		        return true;
-		    }
-		    
-		    return false;
-		}
-
-		
-		/*
 		 * The actual code for playing tictactoe is located here
 		 */
 		@Override

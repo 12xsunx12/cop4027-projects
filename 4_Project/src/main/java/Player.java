@@ -201,6 +201,24 @@ public class Player {
 	    
 	    return false;
 	}
+	
+	private boolean noMoreSpaces() {
+		int counter = 0;
+		
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (board[i][j] != 0) {
+					counter++;
+				}
+			}
+		}
+		
+		if (counter >= 9) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public static void main(String[] args) {
 	    Player client = new Player();
@@ -211,11 +229,18 @@ public class Player {
 	    System.out.print("Please enter a player name: ");
 	    playerName = client.readClient();
 	    
-	    while (true) {
+	    while (true) {	    	
 	    	// recieving move from server logic
 	    	messageFromServer = client.readServer();
 	    	System.out.print("Server: " + messageFromServer);
 	    	client.updateBoard(messageFromServer, true);
+	    	// check to see if there are any spaces left
+	    	if (client.noMoreSpaces()) {
+	    		System.out.print("\n\nIt's a tye! Neither you or the server won. Exiting program...\n\n");
+	    		client.write("q");
+	    		return;
+	    	}
+	    	// check to see if the client won
 	    	if (client.checkWinner(1)) {
 	    		System.out.print("\n\nYou won!!! Exiting program...\n\n"); 
 	    		client.write("q");
@@ -226,11 +251,13 @@ public class Player {
 	    	// sending move to server logic
 	    	System.out.print(playerName + ": ");
 	    	messageTooServer = client.readClient();
+	    	// The user input an invalid input that's not acceptable and would blow everything up
 	    	while (client.updateBoard(messageTooServer, false) == false) {
 	    		System.out.println("Error: your input was not a correct input, try typing it again \n");
 	    		messageTooServer = client.readClient();
 	    	}
 	    	client.drawBoard();
+	    	// check to see if the server won
 	    	if (client.checkWinner(0)) {
 	    		System.out.print("\n\nThe server beat you!!! Exiting program..."); 
 	    		client.write("q");
