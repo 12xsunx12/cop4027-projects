@@ -122,9 +122,16 @@ public class Player {
 		writer.println(message);
 	}
 
-    public static void main(String[] args) {
-        Player client = new Player();
-        
-        
-    }
+	public static void main(String[] args) {
+	    Player client = new Player();
+	    
+	    while (true) {
+	        String messageToServer = client.readClient();
+	        System.out.println("You said: " + messageToServer);
+	        client.write(messageToServer);
+	        String messageFromServer = client.readServer();
+	        
+	        System.out.println("Server said: " + messageFromServer);
+	    }
+	}
 }

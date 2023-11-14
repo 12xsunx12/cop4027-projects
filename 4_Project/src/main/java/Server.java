@@ -81,15 +81,15 @@ public class Server implements Runnable {
 		        PrintWriter clientWriter = createPrintWriter();
 		        
 		        String messageFromClient = "";
-		        while (messageFromClient != null) {
-		        	messageFromClient = clientReader.readLine();
+		        while ((messageFromClient = clientReader.readLine()) != null) {
 		            System.out.println("Received from client: " + messageFromClient);
-		            clientWriter.write(messageFromClient);
+		            clientWriter.println(messageFromClient);
+		            clientWriter.flush(); // Flush the output stream
 		        }
 		    } catch (IOException e) {
 		        System.out.println(e.getMessage());
 		    }
-		}		
+		}
 	}
 	
 	/*
@@ -113,7 +113,7 @@ public class Server implements Runnable {
 	    }
 	
 	public static void main (String[] args) {
-		new Thread(new Server()).start();;
+		new Thread(new Server()).start();
 	}
 }
 	
