@@ -153,20 +153,53 @@ public class Player {
 				}
 			}
 		}
+		
+		System.out.print("\n");
 	}
 	
 	/*
 	 * Update the board with the move made by either client or player. This method will place an 'X' or 'O' in the board
 	 */
-	public void updateBoard(String move, boolean clientOrServer) {
+	public boolean updateBoard(String move, boolean clientOrServer) {
 		int column = move.trim().charAt(0) - '0';
 		int row = move.trim().charAt(1) - '0';
+		
 		// client
-		if ((clientOrServer == false) && (column < 3) && (row < 3) && (column >= 0) && (row >= 0)) {
+		if ((clientOrServer == false) && (column < 3) && (row < 3) && (column >= 0) && (row >= 0) && (board[column][row] == 0)) {
 			board[column][row] = 1;
-		} else {
+			return true;
+		// server
+		} else if ((clientOrServer == true) && (column < 3) && (row < 3) && (column >= 0) && (row >= 0) && (board[column][row] == 0)) { 
 			board[column][row] = 2;
+			return true;
+		} else {
+			return false;
 		}
+	}
+
+	/*
+	 * Checks to see if any of the rows or columns have three in a row, if so, returns true
+	 */
+	private boolean checkWinner(int player) {
+	    // Check rows and columns
+	    for (int i = 0; i < 3; i++) {
+	        if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) || 
+	            (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
+	            if (board[i][0] != 0 && board[i][1] != 0 && board[i][2] != 0) {
+	                return true;
+	            }
+	        }
+	    }
+	    
+	    // Check diagonals
+	    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) || 
+	        (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
+	        if (board[0][0] != 0 && board[1][1] != 0 && board[2][2] != 0) {
+	            return true;
+	        }
+	    }
+	    
+	    return false;
 	}
 
 	public static void main(String[] args) {
@@ -179,14 +212,30 @@ public class Player {
 	    playerName = client.readClient();
 	    
 	    while (true) {
+	    	// recieving move from server logic
 	    	messageFromServer = client.readServer();
 	    	System.out.print("Server: " + messageFromServer);
 	    	client.updateBoard(messageFromServer, true);
+	    	if (client.checkWinner(1)) {
+	    		System.out.print("\n\nYou won!!! Exiting program...\n\n"); 
+	    		client.write("q");
+	    		return;
+	    	}
 	    	client.drawBoard();
-	    	System.out.println(playerName + ": ");
+	    	
+	    	// sending move to server logic
+	    	System.out.print(playerName + ": ");
 	    	messageTooServer = client.readClient();
-	    	client.updateBoard(messageTooServer, false);
+	    	while (client.updateBoard(messageTooServer, false) == false) {
+	    		System.out.println("Error: your input was not a correct input, try typing it again \n");
+	    		messageTooServer = client.readClient();
+	    	}
 	    	client.drawBoard();
+	    	if (client.checkWinner(0)) {
+	    		System.out.print("\n\nThe server beat you!!! Exiting program..."); 
+	    		client.write("q");
+	    		return;
+	    	}
 	    	client.write(messageTooServer);
 	    	client.writer.flush();
 	    }

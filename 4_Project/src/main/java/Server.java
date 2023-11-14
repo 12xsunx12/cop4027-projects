@@ -118,16 +118,44 @@ public class Server implements Runnable {
 		/*
 		 * Update the board with the move made by either client or player. This method will place an 'X' or 'O' in the board
 		 */
-		public void updateBoard(String move, boolean clientOrServer) {
+		public boolean updateBoard(String move, boolean clientOrServer) {
 			int column = move.trim().charAt(0) - '0';
 			int row = move.trim().charAt(1) - '0';
+			
 			// client
-			if (clientOrServer == false) {
+			if ((clientOrServer == false) && (column < 3) && (row < 3) && (column >= 0) && (row >= 0) && (board[column][row] == 0)) {
 				board[column][row] = 1;
-			} else {
+				return true;
+			// server
+			} else if ((clientOrServer == true) && (column < 3) && (row < 3) && (column >= 0) && (row >= 0) && (board[column][row] == 0)) { 
 				board[column][row] = 2;
+				return true;
+			} else {
+				return false;
 			}
 		}
+		
+		/*
+		 * Checks to see if any of the rows or columns have three in a row, if so, returns true
+		 */
+		private boolean checkWinner(int player) {
+		    // Check rows and columns
+		    for (int i = 0; i < 3; i++) {
+		        if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) || 
+		            (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
+		            return true;
+		        }
+		    }
+		    
+		    // Check diagonals
+		    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) || 
+		        (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
+		        return true;
+		    }
+		    
+		    return false;
+		}
+
 		
 		/*
 		 * The actual code for playing tictactoe is located here
@@ -143,11 +171,15 @@ public class Server implements Runnable {
 		        
 		        while (true) {
 		        	messageTooClient = generateRandomMove();
+		        	while(updateBoard(messageTooClient, true) == false || messageTooClient == null) {
+		        		messageTooClient = generateRandomMove();
+		        	}
 		        	clientWriter.println(messageTooClient);
 		        	clientWriter.flush();
 		        	updateBoard(messageTooClient, true);
 		        	drawBoard();
 		        	messageFromClient = clientReader.readLine();
+		        	if (messageFromClient.equals("q")) break; // client has declared a winner or loser and the server will exit
 		        	updateBoard(messageFromClient, false);
 		        	drawBoard();
 		        }
