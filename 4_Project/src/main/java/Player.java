@@ -162,7 +162,7 @@ public class Player {
 		int column = move.trim().charAt(0) - '0';
 		int row = move.trim().charAt(1) - '0';
 		// client
-		if (clientOrServer == false) {
+		if ((clientOrServer == false) && (column < 3) && (row < 3) && (column >= 0) && (row >= 0)) {
 			board[column][row] = 1;
 		} else {
 			board[column][row] = 2;
@@ -183,7 +183,7 @@ public class Player {
 	    	System.out.print("Server: " + messageFromServer);
 	    	client.updateBoard(messageFromServer, true);
 	    	client.drawBoard();
-	    	System.out.print(playerName + ": ");
+	    	System.out.println(playerName + ": ");
 	    	messageTooServer = client.readClient();
 	    	client.updateBoard(messageTooServer, false);
 	    	client.drawBoard();
