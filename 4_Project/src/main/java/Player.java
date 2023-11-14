@@ -42,7 +42,9 @@ public class Player {
 	private void establishInputFromServer() {
 		try {
 			readerServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			System.out.println("Client ServerReader On");
+			if (readerServer != null) {
+				System.out.println("Client ServerReader On");
+			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -64,7 +66,9 @@ public class Player {
 	private void establishOutputTooServer() {
 		try {
 			writer = new PrintWriter(socket.getOutputStream(), true);
-			System.out.println("Client Writer On");
+			if (writer != null) {
+				System.out.println("Client Writer On");
+			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -120,5 +124,7 @@ public class Player {
 
     public static void main(String[] args) {
         Player client = new Player();
+        
+        
     }
 }

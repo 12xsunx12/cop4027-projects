@@ -4,75 +4,117 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Random;
 
-public class Server extends Thread {
+public class Server implements Runnable {
 	private final int PORT_NUMBER = 9999; // Port that the client will try to connect on
+	private ServerSocket serverSocket;
+	private Socket clientSocket;
 	
 	/*
-	 * Create a InputStream between Client and Server
+	 * Create the ServerSocket object
 	 */
-	private BufferedReader establishInputFromClient(Socket clientSocket) throws IOException {
-		return new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+	private ServerSocket createServerSocket() {
+		try {
+			return serverSocket = new ServerSocket(PORT_NUMBER);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 	
 	/*
-	 * Create a OutputStream between Client and Server
+	 * Puts server into listen mode. The next client that connects is recognized and taken to a new thread where the game is played
 	 */
-	private PrintWriter establishOutputTooClient(Socket clientSocket) throws IOException {
-		return new PrintWriter(clientSocket.getOutputStream(), true);
+	private void acceptConnection() {
+		try {
+			System.out.println("Listening for connection...");
+			clientSocket = serverSocket.accept();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
-	 // Method to handle a single client connection
-    private void handleClient(Socket clientSocket) {
-        try (PrintWriter writer = establishOutputTooClient(clientSocket); BufferedReader reader = establishInputFromClient(clientSocket)) {
-            while (true) {
-            	
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                // Close resources when the client disconnects
-                clientSocket.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+	/*
+	 * Private class used to manage the actual game itself within each thread.
+	 */
+	private class ClientHandler implements Runnable {
+		private Socket clientSocket;
+		
+		/*
+		 * Create the buffered reader needed for client -> server (input)
+		 */
+		private BufferedReader createBufferedReader() {
+			try {
+				return new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
+		}
+		
+		/*
+		 * Create the print writer needed for server -> client (output)
+		 */
+		private PrintWriter createPrintWriter() {
+			try {
+				return new PrintWriter(clientSocket.getOutputStream());
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
+		}
+		
+		/*
+		 * Constructor
+		 */
+		public ClientHandler(Socket clientSocket) {
+			this.clientSocket = clientSocket;
+		}
+		
+		/*
+		 * The actual code for playing tictactoe is located here
+		 */
+		@Override
+		public void run() {
+		    try {
+		        BufferedReader clientReader = createBufferedReader();
+		        PrintWriter clientWriter = createPrintWriter();
+		        
+		        String messageFromClient = "";
+		        while (messageFromClient != null) {
+		        	messageFromClient = clientReader.readLine();
+		            System.out.println("Received from client: " + messageFromClient);
+		            clientWriter.write(messageFromClient);
+		        }
+		    } catch (IOException e) {
+		        System.out.println(e.getMessage());
+		    }
+		}		
+	}
 	
 	/*
 	 * Constructor
 	 */
 	public Server() {
-		start();
+		serverSocket = createServerSocket();
 	}
 	
 	/*
-	 * Code inside of our thread
+	 * All program logic goes in this method. Each thread will run whatever this is seperatetly.
 	 */
-	@Override
-    public void run() {
-        try (ServerSocket serverSocket = new ServerSocket(PORT_NUMBER)) {
-            System.out.println("Server is listening on port " + PORT_NUMBER);
-
-            while (true) {
-                final Socket clientSocket = serverSocket.accept(); // wait for a client to connect
-                System.out.println("Client connected: " + clientSocket.getInetAddress());
-
-                new Thread(new Runnable() { // start new thread for the connected client
-                    @Override
-                    public void run() {
-                        handleClient(clientSocket);
-                    }
-                }).start();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	 @Override
+	    public void run() {
+	        while (true) {
+	        	// Logic initially ran to accept new clients
+	            acceptConnection();
+	            System.out.println("New client connected: " + clientSocket.getInetAddress());
+	            new Thread(new ClientHandler(clientSocket)).start();;
+	        }
+	    }
 	
 	public static void main (String[] args) {
-		 Server server = new Server();
+		new Thread(new Server()).start();;
 	}
 }
+	
+	
