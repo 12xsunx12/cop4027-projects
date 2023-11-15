@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+  
+  <meta name="Author" content="John coffey">
+
+  
+  <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; U) [Netscape]">
+  <title>MVC Program</title>
+
+  
+  
+  <style>
+<!--
+div.Section1
+
+
+
+
+	{page:Section1;}
+
+
+
+
+-->
+  </style>
+</head><body>
+<center>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><font size="4">The
+University of West Florida
+<br>
+Department of Computer Science</font></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><font size="4">Advanced
+Computer Programming Assignment</font></b></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><font size="4">John
+W. Coffey</font></b></p>
+</center>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b>Program Description</b></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">We will write a
+distributed model-vies-controller application
+database. The system will enable the user to issue queries to find
+information regarding musical instruments, prices, availabilities, and
+locations. <br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; font-weight: bold;">The
+Database</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The database schema
+looks like this:</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center;"><img style="width: 609px; height: 216px;" alt="ER diagram showing musical instruments and locations" src="P5-ERDiagram.png"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The database data will
+be standard and can be downloaded from the project assignment page. For
+testing purposes, your program should drop the tables in the database
+at the beginning of the server run, create the tables, and populate the
+tables with the data supplied with the project. The server should then
+wait for clients to connect. The program will run on localhost as the
+network tic tac toe game did.</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">You should use these
+methods to create the tables, add the test data, and confirm that
+everything worked:<br>
+</p>
+
+<span style="font-family: monospace;"><br>
+public ResultSet createInstruments(Statement stat) throws Exception</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; {</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("CREATE TABLE Instruments (instName
+CHAR(12),instNumber INTEGER,cost DOUBLE,descrip CHAR(20))");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Instruments VALUES
+('guitar',1,100.0,'yamaha')");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Instruments VALUES
+('guitar',2,500.0,'gibson')");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Instruments VALUES
+('bass',3,250.0,'fender')");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Instruments VALUES
+('keyboard',4,600.0,'roland')"</span><wbr style="font-family: monospace;"><span style="font-family: monospace;">);</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Instruments VALUES
+('keyboard',5,500.0,'alesis')"</span><wbr style="font-family: monospace;"><span style="font-family: monospace;">);<br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Instruments VALUES
+('drums',6,1500.0,'ludwig')"</span><wbr style="font-family: monospace;"><span style="font-family: monospace;">);<br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Instruments VALUES
+('drums',7,400.0,'yamaha')"</span><wbr style="font-family: monospace;"><span style="font-family: monospace;">);</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;ResultSet result = stat.executeQuery("SELECT * FROM Instruments");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;return result;</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; }</span><br style="font-family: monospace;">
+
+<br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; public ResultSet
+createLocations(Statement stat) throws Exception</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; {</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("CREATE TABLE Locations (locName CHAR(12),locNumber
+INTEGER,address CHAR(50))");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Locations VALUES ('PNS',1,'Pensacola
+Florida')");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Locations VALUES ('CLT',2,'Charlotte
+North Carolina')");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Locations VALUES ('DFW',3,'Dallas Fort
+Worth Texas')");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;ResultSet result = stat.executeQuery("SELECT * FROM Locations");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;return result;</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; }</span><br style="font-family: monospace;">
+
+<br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; public ResultSet
+createInventory(Statement stat) throws Exception</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; {</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("CREATE TABLE Inventory (iNumber INTEGER,lNumber
+INTEGER,quantity INTEGER)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (1,1,15)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (1,2,27)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (1,3,20)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (2,1,10)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (2,2,10)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (2,3,35)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (3,1,45)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (3,2,10)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (3,3,17)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (4,1,28)");</span><span style="font-family: monospace;"></span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (4,2,10)");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (4,3,16)"); <br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Inventory VALUES (5,1,28)");</span><span style="font-family: monospace;"></span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (5,2,10)");<br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Inventory VALUES (5,3,1)");<br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Inventory VALUES (6,1,2)");</span><span style="font-family: monospace;"></span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;stat.execute("INSERT INTO Inventory VALUES (6,2,10)");</span><span style="font-family: monospace;"> <br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Inventory VALUES (6,3,16)");</span><span style="font-family: monospace;"><br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Inventory VALUES (7,1,16)");</span><span style="font-family: monospace;"><br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Inventory VALUES (7,2,4)");</span><span style="font-family: monospace;"></span><span style="font-family: monospace;"> <br>
+</span><span style="font-family: monospace;">&nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; stat.execute("INSERT INTO Inventory VALUES (7,3,12)");</span><span style="font-family: monospace;"></span><span style="font-family: monospace;">&nbsp;</span><span style="font-family: monospace;">&nbsp; &nbsp;&nbsp; </span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;ResultSet result = stat.executeQuery("SELECT * FROM Inventory");</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;return result;</span><br style="font-family: monospace;">
+
+<span style="font-family: monospace;">&nbsp; }</span>
+
+<div class="adL"><br style="color: rgb(34, 34, 34); font-family: Arial,Helvetica,sans-serif; font-size: small; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: rgb(255, 255, 255);">
+</div>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span style="font-weight: bold;">The View</span><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The view
+will run after the controller has been started. It should be able to
+handle
+a failure to connect to the controller without exceptions or abnormal
+termination. The view should present a user interface that allows the
+user to enter searches
+for musical instruments, communicate the searches to the controller,
+and
+receive results back indicating availability and locations of the
+instrument. We will use ChoiceBoxes to provide pull-down menus to the
+user. A basic client interface might look something like this:</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center;"><img style="width: 506px; height: 381px;" alt="The client interface." src="client3.png"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Note that the
+instrument brand ONLY populates after an instrument type has been
+chosen, since different types of instruments have different brand names
+(think Ludwig drums and Fender guitars). The client interface must be
+built in such a way that it always sends all the information the
+server needs. For instance, if no maximum cost is specified, the server
+should identify all instruments that meet the other criteria,
+regardless of cost. <br>
+</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The view produces
+string parameters to be sent to the controller:</p>
+
+<ul>
+
+  <li>musical instrument type (all, guitar, bass, drums, keyboard,
+etc.), </li>
+  <li>brand (Ludwig, Gibson, Fender, etc, conditioned by selection of
+instrument type), </li>
+  <li>maximum cost (which can be unspecified)<br>
+  </li>
+  <li>warehouse where gear is located.</li>
+</ul>
+
+The controller receives the parameters (some of which might be 'all' or
+'null') from the view. The controller hands the parameters to a thread
+that builds the SQL query for the request, issues the query to the
+backend, gets the result as a ResultSet, builds an ArrayList of Strings
+representing the result, and ships the strings back to the view. The
+view pops up a child window with the results. Note: for this
+assignment, we are only doing reads on the database. However, I still
+want you to implement locks since it is basic defensive programming,
+and any production system of this sort would certainly need to update
+the database.<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The database has three
+tables - instruments, warehouses, and inventory in the various
+warehouses, so the SQL queries have to do joins on multiple relations
+and have highly variable WHERE clauses. A typical query might be: all
+Gibson guitars under $500 located in the PNS warehouse (I used airport
+codes for the locations :-) )</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The results displayed
+on the view might look like this:</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center;"><img style="width: 504px; height: 246px;" alt="The result window showing a typical result." src="result.png"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">This result indicates
+Gibson guitars in three locations, each being $500.00 with 10 guitars
+in Pensacola, 10 in Charlotte, N.C., and 35 guitars in DFW.<br>
+</p>
+
+<br>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; font-weight: bold;">Working
+with Eclipse Projects:</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+I have decided that we will develop in Eclipse for this project. You
+may rename Maven project folders BEFORE importing into Eclipse. If you
+rename them in the eclipse-workspace AFTER importing, Eclipse will not
+find them.<br>
+
+<ul>
+
+  <li>For the client program: Use the Maven archetype we used for
+project 2. Then you can develop the JavaFX GUI.</li>
+  <li>For the server program: Use the Project1 template program
+downloadable from the project 1 description. It has all the stuff
+needed for database and the controller does not need any GUI capability.</li>
+</ul>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; font-weight: bold;">Teams</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">You may work
+individually or in teams of two on this project. If you have not had
+database and you want to work on a team, I strongly encourage you to
+get a teammate who has had database.<br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b><br>
+</b></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><b>Deliverables</b>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">You will submit all the
+usual things:
+<br>
+1. A UML class diagram. All classes may go in one diagram.<br>
+2. Your two project folders named:</p>
+
+<ul>
+
+  <li style="font-family: monospace;">&lt;lastname&gt;&lt;firstinitial&gt;Client<br>
+  </li>
+  <li><span style="font-family: monospace;">&lt;lastname&gt;&lt;firstinitial&gt;Server
+    <br>
+    </span></li>
+</ul>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+If two people work together, concatenate both last names:</p>
+
+<ul>
+
+  <li style="font-family: monospace;">&lt;lastname1&gt;&lt;lastname2&gt;Client<br>
+  </li>
+  <li><span style="font-family: monospace;">&lt;lastname1&gt;&lt;lastname2&gt;Server
+    </span></li>
+</ul>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">3. A user's manual
+telling exactly how to run the project and any problems with how it
+runs.<br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><br>
+</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Please review the
+policy on Academic dishonesty.<br>
+</p>
+
+<div class="Section1">
+<p class="MsoNormal" style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<p class="MsoNormal" style="margin-top: 0pt; margin-bottom: 0pt;"><b>Submission:
+</b><span style="font-weight: 700;">&nbsp;</span></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">1. Compile and run your
+programs one last time before submitting them.<br>
+</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">2. Put all your files
+in a single folder named <span style="font-family: monospace;">&lt;lastname1&gt;&lt;lastname2&gt;</span>
+if a team of two or <span style="font-family: monospace;">&lt;lastname&gt;&lt;firstinitial&gt;
+</span>if individual.<br>
+</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">3. Create a "zip"&nbsp;
+file (using WinZip or similar program) zipping the project folder. </p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">The name of your zip
+file should be: &lt;lastname&gt;&lt;firstinitial&gt; (individual) or
+&lt;lastname1&gt;&lt;lastname2&gt; (team) followed by the .zip
+extension. For
+example, if your name is John Coffey,
+your zip file should be called coffeyj.zip. </p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">4. Login to UWF's
+Canvas system. Select our course. </p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">5. Select the
+appropriate Assignment. Click the Submit Assignment button and upload
+your zip file.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">6.
+Check the to insure that the file was uploaded. You MUST do this with
+enough time before the deadline to account for slow server response and
+differences in your computer's time and the server's time.<br>
+</p>
+</div>
+
+</body></html>
