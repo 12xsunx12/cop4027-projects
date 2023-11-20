@@ -14,6 +14,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class View extends Application {
+	
+	/*
+	 * Constructor
+	 */
+	public View() {
+		
+	}
+	
+	/*
+	 * Refresh the gui with new or changed information when the user does stuff
+	 */
+	private void updateView() {
+		
+	}
 
     @Override
     public void start(Stage primaryStage) {
