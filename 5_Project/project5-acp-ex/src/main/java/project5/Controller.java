@@ -2,6 +2,13 @@ package project5;
 
 /*
  * CONTROLLER - handles all netcode and interactions between model and view
+ * 
+ * - Code Formatting (in this order)
+ * 		- variable declarations
+ * 		- public constructor();
+ * 		- private methods();
+ * 		- public methods();
+ * 		- public toString();
  */
 public class Controller {
 	private Model model;

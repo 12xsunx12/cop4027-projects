@@ -3,6 +3,13 @@ package project5;
 /*
  * VIEW - this class is the graphical interface the user interacts with
  * uses data from model in memory to create the graphical interface
+ * 
+ * - Code Formatting (in this order)
+ * 		- variable declarations
+ * 		- public constructor();
+ * 		- private methods();
+ * 		- public methods();
+ * 		- public toString();
  */
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -14,6 +21,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class View extends Application {
+	/*
+	 * variable declarations
+	 */
 	
 	/*
 	 * Constructor
