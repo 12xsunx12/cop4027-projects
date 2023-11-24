@@ -1,5 +1,6 @@
 package project5;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -30,11 +31,21 @@ public class Model {
 	
 	public void createDatabase() {
 		SimpleDataSource simpleDataSource = new SimpleDataSource();
+		try {
+			simpleDataSource.init("database.properties");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Connection connection = null;
 		Statement statement = null;
 		
 		try {
-			connection = simpleDataSource.getConnection();
+			connection = SimpleDataSource.getConnection();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
