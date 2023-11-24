@@ -49,13 +49,13 @@ public class View extends Application {
 
         // ComboBoxes
         ComboBox<String> instrumentTypeComboBox = new ComboBox<>();
-        instrumentTypeComboBox.getItems().addAll("Option1", "Option2", "Option3");
+        instrumentTypeComboBox.getItems().addAll("All", "Guitar", "Bass", "Drums", "Keyboard");
 
         ComboBox<String> instrumentBrandComboBox = new ComboBox<>();
-        instrumentBrandComboBox.getItems().addAll("Option1", "Option2", "Option3");
+        instrumentBrandComboBox.getItems().addAll("All", "Ludwig", "Gibson", "Fender");
 
         ComboBox<String> warehouseComboBox = new ComboBox<>();
-        warehouseComboBox.getItems().addAll("Warehouse1", "Warehouse2", "All");
+        warehouseComboBox.getItems().addAll("All", "Pensacola, Florida", "Charlotte, North Carollina", "Dallas, Forth Worth Texas");
 
         // Text field
         TextField maxCostTextField = new TextField();
@@ -72,8 +72,10 @@ public class View extends Application {
                 warehouseLabel, warehouseComboBox,
                 submitButton
         );
+        
+        
 
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(root, 500, 350);
 
         primaryStage.setTitle("Instrument Request");
         primaryStage.setScene(scene);
