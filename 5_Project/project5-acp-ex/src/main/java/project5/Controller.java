@@ -1,5 +1,7 @@
 package project5;
 
+import javafx.event.ActionEvent;
+
 /*
  * CONTROLLER - handles all netcode and interactions between model and view
  * 
@@ -20,5 +22,13 @@ public class Controller {
 	public Controller(Model model, View view) {
 		this.model = model;
 		this.view = view;
+		
+		view.getSubmitButton().setOnAction(e -> handle());
 	}
+	
+	 private void handle() {
+		 System.out.println("submit button being handled");
+    }
+	
+	
 }
