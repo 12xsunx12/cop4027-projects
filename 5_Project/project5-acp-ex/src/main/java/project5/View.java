@@ -84,32 +84,23 @@ public class View{
      * Getters for UI components (if needed)
      */
 
-    public ComboBox<String> getInstrumentTypeComboBox() {
-        return instrumentTypeComboBox;
+    public String getInstrumentTypeComboBox() {
+        return instrumentTypeComboBox.getValue();
     }
 
-    public ComboBox<String> getInstrumentBrandComboBox() {
-        return instrumentBrandComboBox;
+    public String getInstrumentBrandComboBox() {
+        return instrumentBrandComboBox.getValue();
     }
 
-    public ComboBox<String> getWarehouseComboBox() {
-        return warehouseComboBox;
+    public String getWarehouseComboBox() {
+        return warehouseComboBox.getValue();
     }
 
-    public TextField getMaxCostTextField() {
-        return maxCostTextField;
+    public String getMaxCostTextField() {
+        return maxCostTextField.getText();
     }
     
     public Button getSubmitButton() {
     	return submitButton;
     }
-    
-    
-    
-   
-
-
-
-
-    // Add other getters as needed
 }

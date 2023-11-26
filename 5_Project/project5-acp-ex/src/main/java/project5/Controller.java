@@ -27,8 +27,11 @@ public class Controller {
 	}
 	
 	 private void handle() {
-		 System.out.println("submit button being handled");
-    }
+		 System.out.println("Instrument Type: " + view.getInstrumentTypeComboBox());
+		 System.out.println("Instrument Brand: " + view.getInstrumentBrandComboBox());
+		 System.out.println("Maximum Cost: " + view.getMaxCostTextField());
+		 System.out.println("Warehouse Location: " + view.getWarehouseComboBox());
+	}
 	
 	
 }
