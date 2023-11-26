@@ -1,5 +1,8 @@
 package project5;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.event.ActionEvent;
 
 /*
@@ -26,12 +29,28 @@ public class Controller {
 		view.getSubmitButton().setOnAction(e -> handle());
 	}
 	
-	 private void handle() {
-		 System.out.println("Instrument Type: " + view.getInstrumentTypeComboBox());
-		 System.out.println("Instrument Brand: " + view.getInstrumentBrandComboBox());
-		 System.out.println("Maximum Cost: " + view.getMaxCostTextField());
-		 System.out.println("Warehouse Location: " + view.getWarehouseComboBox());
+	private void handle() {
+		String instrumentType = view.getInstrumentTypeComboBox();
+		String instrumentBrand = view.getInstrumentBrandComboBox();
+		String maxCost = view.getMaxCostTextField();
+		String warehouseLocation = view.getWarehouseComboBox();
+		ResultSet results = model.searchDB(instrumentType, instrumentBrand, maxCost, warehouseLocation);
+
+	    // Handle the results
+	    if (results != null) {
+	        try {
+	            while (results.next()) {
+	                // Process each row of the result set as per your requirement
+	                // For example, you can print out the values or add them to a list
+	                System.out.println("Instrument Name: " + results.getString("instName"));
+	                // Add other columns as needed
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("Error processing search results: " + e.getMessage());
+	        }
+	    } else {
+	        System.out.println("No results found or an error occurred.");
+	    }
 	}
-	
 	
 }

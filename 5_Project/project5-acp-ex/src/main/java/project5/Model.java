@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /*
  * MODEL - handles all the back-end, database code, and data-containers
@@ -32,6 +33,9 @@ public class Model {
 	}
 	
 	public void createDatabase() {
+		databaseManager.dropTable("Instruments");
+		databaseManager.dropTable("Locations");
+		databaseManager.dropTable("Inventory");
 		try {
 			createInstruments();
 		} catch (Exception e) {
@@ -48,6 +52,41 @@ public class Model {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public ResultSet searchDB(String instrumentType, String brand, String maxCost, String warehouseLocation) {
+	    StringBuilder query = new StringBuilder("SELECT * FROM Instruments JOIN Inventory ON Instruments.instNumber = Inventory.iNumber JOIN Locations ON Inventory.lNumber = Locations.locNumber");
+
+	    ArrayList<String> conditions = new ArrayList<>();
+
+	    if (instrumentType != null && !instrumentType.isEmpty()) {
+	        conditions.add("Instruments.instName = '" + instrumentType + "'");
+	    }
+	    if (brand != null && !brand.isEmpty()) {
+	        conditions.add("Instruments.descrip = '" + brand + "'");
+	    }
+	    if (maxCost != null && !maxCost.isEmpty()) {
+	        conditions.add("Instruments.cost <= " + maxCost);
+	    }
+	    if (warehouseLocation != null && !warehouseLocation.isEmpty()) {
+	        // Assign the result of replace back to warehouseLocation
+	        warehouseLocation = warehouseLocation.replace(",", "");
+	        conditions.add("Locations.address = '" + warehouseLocation + "'");
+	    }
+
+	    if (!conditions.isEmpty()) {
+	        query.append(" WHERE ").append(String.join(" AND ", conditions));
+	    }
+
+	    try {
+	        System.out.println(query.toString());
+	        return databaseManager.queryResultSet(query.toString());
+	    } catch (Exception e) {
+	        System.out.println("Error executing search query: " + e.getMessage());
+	        return null;
+	    }
+	}
+
+
 	
 	private ResultSet createInstruments() throws Exception {
 		databaseManager.createTable("CREATE TABLE Instruments (instName CHAR(12),instNumber INTEGER,cost DOUBLE,descrip CHAR(20))");
@@ -97,4 +136,5 @@ public class Model {
 		ResultSet result = databaseManager.queryResultSet("SELECT * FROM Inventory");
 		return result;
 	}
+	
 }
