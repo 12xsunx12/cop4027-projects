@@ -34,6 +34,7 @@ public class Controller {
 		String instrumentBrand = view.getInstrumentBrandComboBox();
 		String maxCost = view.getMaxCostTextField();
 		String warehouseLocation = view.getWarehouseComboBox();
+		model.select(instrumentType, instrumentBrand, maxCost, warehouseLocation);
 		ResultSet results = model.searchDB(instrumentType, instrumentBrand, maxCost, warehouseLocation);
 
 	    // Handle the results

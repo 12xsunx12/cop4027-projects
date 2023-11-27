@@ -53,9 +53,22 @@ public class Model {
 		}
 	}
 	
+	public void select(String instrumentType, String brand, String maxCost, String warehouseLocation) {
+		String query = "SELECT DISTINCT *"
+				+ " FROM Instruments"
+				+ " JOIN Inventory ON Instruments.instNumber = Inventory.iNumber"
+				+ " JOIN Locations ON Inventory.lNumber = Locations.locNumber";
+		try {
+			System.out.println(databaseManager.query(query));
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	
+	
 	public ResultSet searchDB(String instrumentType, String brand, String maxCost, String warehouseLocation) {
 	    StringBuilder query = new StringBuilder("SELECT * FROM Instruments JOIN Inventory ON Instruments.instNumber = Inventory.iNumber JOIN Locations ON Inventory.lNumber = Locations.locNumber");
-
 	    ArrayList<String> conditions = new ArrayList<>();
 
 	    if (instrumentType != null && !instrumentType.isEmpty()) {
