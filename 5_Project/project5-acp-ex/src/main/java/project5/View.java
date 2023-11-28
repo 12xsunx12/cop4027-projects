@@ -47,13 +47,13 @@ public class View{
         warehouseLabel = new Label("Warehouse Location: ");
 
         instrumentTypeComboBox = new ComboBox<>();
-        instrumentTypeComboBox.getItems().addAll("All", "Guitar", "Bass", "Drums", "Keyboard");
+        instrumentTypeComboBox.getItems().addAll("all", "guitar", "bass", "drums", "keyboard");
 
         instrumentBrandComboBox = new ComboBox<>();
-        instrumentBrandComboBox.getItems().addAll("All", "Ludwig", "Gibson", "Fender");
+        instrumentBrandComboBox.getItems().addAll("all", "ludwig", "gibson", "fender");
 
         warehouseComboBox = new ComboBox<>();
-        warehouseComboBox.getItems().addAll("All", "Pensacola, Florida", "Charlotte, North Carolina", "Dallas, Fort Worth Texas");
+        warehouseComboBox.getItems().addAll("all", "Pensacola, Florida", "Charlotte, North Carolina", "Dallas, Fort Worth Texas");
 
         maxCostTextField = new TextField();
 

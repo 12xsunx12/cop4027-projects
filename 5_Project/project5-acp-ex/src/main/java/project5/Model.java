@@ -71,17 +71,16 @@ public class Model {
 	    StringBuilder query = new StringBuilder("SELECT * FROM Instruments JOIN Inventory ON Instruments.instNumber = Inventory.iNumber JOIN Locations ON Inventory.lNumber = Locations.locNumber");
 	    ArrayList<String> conditions = new ArrayList<>();
 
-	    if (instrumentType != null && !instrumentType.isEmpty()) {
+	    if (instrumentType != null && !instrumentType.isEmpty() && !instrumentType.equals("all")) {
 	        conditions.add("Instruments.instName = '" + instrumentType + "'");
 	    }
-	    if (brand != null && !brand.isEmpty()) {
+	    if (brand != null && !brand.isEmpty() && !brand.equals("all")) {
 	        conditions.add("Instruments.descrip = '" + brand + "'");
 	    }
-	    if (maxCost != null && !maxCost.isEmpty()) {
+	    if (maxCost != null && !maxCost.isEmpty() && !maxCost.equals("all")) {
 	        conditions.add("Instruments.cost <= " + maxCost);
 	    }
-	    if (warehouseLocation != null && !warehouseLocation.isEmpty()) {
-	        // Assign the result of replace back to warehouseLocation
+	    if (warehouseLocation != null && !warehouseLocation.isEmpty() && !warehouseLocation.equals("all")) {
 	        warehouseLocation = warehouseLocation.replace(",", "");
 	        conditions.add("Locations.address = '" + warehouseLocation + "'");
 	    }
@@ -98,6 +97,7 @@ public class Model {
 	        return null;
 	    }
 	}
+
 
 
 	
