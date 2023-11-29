@@ -1,16 +1,22 @@
 package project5;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
+/*
+ * VIEW - graphical presentation of the program
+ * 
+ * - Code Formatting (in this order)
+ * 		- variable declarations
+ * 		- public constructor();
+ * 		- public methods();
+ * 		- private methods();
+ * 		- public toString();
+ */
 public class View{
     /*
      * Instance variable declarations
@@ -36,7 +42,42 @@ public class View{
     public View() {
     	initializeComponents();
     }
+    
+    public VBox getRoot() {
+        return root;
+    }
+    
+    public void showMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Query Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
+    /*
+     * Getters for UI components (if needed)
+     */
+    public String getInstrumentTypeComboBox() {
+        return instrumentTypeComboBox.getValue();
+    }
+    
+    public String getInstrumentBrandComboBox() {
+        return instrumentBrandComboBox.getValue();
+    }
+
+    public String getWarehouseComboBox() {
+        return warehouseComboBox.getValue();
+    }
+
+    public String getMaxCostTextField() {
+        return maxCostTextField.getText();
+    }
+    
+    public Button getSubmitButton() {
+    	return submitButton;
+    }
+    
     /*
      * Initialize UI components
      */
@@ -74,33 +115,5 @@ public class View{
      */
     private void updateView() {
         // Update view components
-    }
-    
-    public VBox getRoot() {
-        return root;
-    }
-
-    /*
-     * Getters for UI components (if needed)
-     */
-
-    public String getInstrumentTypeComboBox() {
-        return instrumentTypeComboBox.getValue();
-    }
-
-    public String getInstrumentBrandComboBox() {
-        return instrumentBrandComboBox.getValue();
-    }
-
-    public String getWarehouseComboBox() {
-        return warehouseComboBox.getValue();
-    }
-
-    public String getMaxCostTextField() {
-        return maxCostTextField.getText();
-    }
-    
-    public Button getSubmitButton() {
-    	return submitButton;
     }
 }
