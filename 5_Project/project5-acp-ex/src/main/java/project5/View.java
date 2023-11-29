@@ -1,26 +1,20 @@
 package project5;
 
+import java.io.IOException;
+import java.net.Socket;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-/*
- * VIEW - graphical presentation of the program
- * 
- * - Code Formatting (in this order)
- * 		- variable declarations
- * 		- public constructor();
- * 		- public methods();
- * 		- private methods();
- * 		- public toString();
- */
-public class View{
-    /*
-     * Instance variable declarations
-     */
+public class View extends Application{
+
     private Label instrumentTypeLabel;
     private Label instrumentBrandLabel;
     private Label maxCostLabel;
@@ -35,10 +29,9 @@ public class View{
     private Button submitButton;
 
     private VBox root;
+    
+    private Controller controller;
 
-    /*
-     * Constructor
-     */
     public View() {
     	initializeComponents();
     }
@@ -55,9 +48,6 @@ public class View{
         alert.showAndWait();
     }
 
-    /*
-     * Getters for UI components (if needed)
-     */
     public String getInstrumentTypeComboBox() {
         return instrumentTypeComboBox.getValue();
     }
@@ -78,9 +68,6 @@ public class View{
     	return submitButton;
     }
     
-    /*
-     * Initialize UI components
-     */
     private void initializeComponents() {
         instrumentTypeLabel = new Label("Instrument Type: ");
         instrumentBrandLabel = new Label("Instrument Brand: ");
@@ -99,6 +86,7 @@ public class View{
         maxCostTextField = new TextField();
 
         submitButton = new Button("Submit Request");
+        submitButton.setOnAction(e -> controller.handle()); 
 
         root = new VBox(10);
         root.getChildren().addAll(
@@ -110,10 +98,17 @@ public class View{
         );
     }
 
-    /*
-     * Refresh the GUI with new or changed information when the user does stuff
-     */
-    private void updateView() {
-        // Update view components
-    }
+    public static void main(String[] args) throws IOException{
+		launch(args);
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		final int SBAP_PORT = 8888;
+	    Socket s = new Socket("localhost", SBAP_PORT);
+		Scene scene = new Scene(getRoot(), 500, 350); // Create the scene with the root from view
+        primaryStage.setTitle("Instrument Request");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+	}
 }

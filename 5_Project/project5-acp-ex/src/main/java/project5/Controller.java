@@ -1,38 +1,23 @@
 package project5;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 
-/*
- * CONTROLLER - handles all netcode and interactions between model and view
- * 
- * - Code Formatting (in this order)
- * 		- variable declarations
- * 		- public constructor();
- * 		- public methods();
- * 		- private methods();
- * 		- public toString();
- */
-public class Controller {
+public class Controller implements Runnable{
 	private Model model;
 	private View view;
 	
-	/*
-	 * Constructor
-	 */
 	public Controller(Model model, View view) {
 		this.model = model;
 		this.view = view;
-		
-		view.getSubmitButton().setOnAction(e -> handle());
 	}
 	
-	/*
-	 * grabs information from both the model and the view to combine their logic
-	 */
-	private void handle() {
+	public void handle() {
 		String instrumentType = view.getInstrumentTypeComboBox();
 		String instrumentBrand = view.getInstrumentBrandComboBox();
 		String maxCost = view.getMaxCostTextField();
@@ -63,6 +48,24 @@ public class Controller {
 		    System.out.println("No results found or an error occurred.");
 		}
 
+	}
+	
+	public static void main(String[] args) throws IOException{  
+	    final int SBAP_PORT = 8888;
+	    ServerSocket server = new ServerSocket(SBAP_PORT);
+	    System.out.println("Waiting for clients to connect...");
+	    while (true){
+	    	Socket s = server.accept();
+	        System.out.println("Client connected.");
+	        Controller controller = new Controller(new Model(), new View());
+            Thread t = new Thread(controller);
+	        t.start();
+	    }
+	}
+
+	@Override
+	public void run() {
+		
 	}
 	
 }
