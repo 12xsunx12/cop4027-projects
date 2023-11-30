@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Nov 29 15:21:17 CST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-018c-1cf5-2643-000006f5afc8 
+Thu Nov 30 11:50:25 CST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-018c-215a-72bb-000006f03410 
 on database directory /home/twells/Documents/javaCode/cop4027-projects/5_Project/project5-acp-ex/myDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1b28cdfa 
 Loaded from file:/home/twells/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Ubuntu

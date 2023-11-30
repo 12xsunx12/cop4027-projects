@@ -1,7 +1,11 @@
 package project5;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -10,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,6 +24,9 @@ public class View extends Application{
     private Label instrumentBrandLabel;
     private Label maxCostLabel;
     private Label warehouseLabel;
+    
+    private Scanner in;
+	private PrintWriter out;
 
     private ComboBox<String> instrumentTypeComboBox;
     private ComboBox<String> instrumentBrandComboBox;
@@ -33,7 +41,7 @@ public class View extends Application{
     private Controller controller;
 
     public View() {
-    	initializeComponents();
+    	//initializeComponents();
     }
     
     public VBox getRoot() {
@@ -48,25 +56,25 @@ public class View extends Application{
         alert.showAndWait();
     }
 
-    public String getInstrumentTypeComboBox() {
-        return instrumentTypeComboBox.getValue();
-    }
-    
-    public String getInstrumentBrandComboBox() {
-        return instrumentBrandComboBox.getValue();
-    }
-
-    public String getWarehouseComboBox() {
-        return warehouseComboBox.getValue();
-    }
-
-    public String getMaxCostTextField() {
-        return maxCostTextField.getText();
-    }
-    
-    public Button getSubmitButton() {
-    	return submitButton;
-    }
+//    public String getInstrumentTypeComboBox() {
+//        return instrumentTypeComboBox.getValue();
+//    }
+//    
+//    public String getInstrumentBrandComboBox() {
+//        return instrumentBrandComboBox.getValue();
+//    }
+//
+//    public String getWarehouseComboBox() {
+//        return warehouseComboBox.getValue();
+//    }
+//
+//    public String getMaxCostTextField() {
+//        return maxCostTextField.getText();
+//    }
+//    
+//    public Button getSubmitButton() {
+//    	return submitButton;
+//    }
     
     private void initializeComponents() {
         instrumentTypeLabel = new Label("Instrument Type: ");
@@ -86,7 +94,8 @@ public class View extends Application{
         maxCostTextField = new TextField();
 
         submitButton = new Button("Submit Request");
-        submitButton.setOnAction(e -> controller.handle()); 
+        submitButton.setOnAction(e -> handleSubmitButtonAction());
+        //submitButton.setOnAction(); 
 
         root = new VBox(10);
         root.getChildren().addAll(
@@ -97,6 +106,23 @@ public class View extends Application{
                 submitButton
         );
     }
+    
+    private void handleSubmitButtonAction() {
+    	String instrumentType = instrumentTypeComboBox.getValue();
+        String instrumentBrand = instrumentBrandComboBox.getValue();
+        String maxCost = maxCostTextField.getText();
+        String warehouse = warehouseComboBox.getValue();
+
+        // Send data to the server
+        out.println(instrumentType + "@" + instrumentBrand + "@" + maxCost + "@" + warehouse);
+        out.flush();
+        
+        while(in.nextLine() != null) {
+        	System.out.println("Hi");
+        }
+    }
+
+
 
     public static void main(String[] args) throws IOException{
 		launch(args);
@@ -106,8 +132,15 @@ public class View extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		final int SBAP_PORT = 8888;
 	    Socket s = new Socket("localhost", SBAP_PORT);
-		Scene scene = new Scene(getRoot(), 500, 350); // Create the scene with the root from view
+	    InputStream instream = s.getInputStream();
+	    OutputStream outstream = s.getOutputStream();
+	    in = new Scanner(instream);
+	    out = new PrintWriter(outstream); 
         primaryStage.setTitle("Instrument Request");
+        
+        initializeComponents();
+        
+		Scene scene = new Scene(getRoot(), 500, 350); // Create the scene with the root from view
         primaryStage.setScene(scene);
         primaryStage.show();
 	}

@@ -85,7 +85,12 @@ public class Model {
 	
 	
 	
-	public ResultSet searchDB(String instrumentType, String brand, String maxCost, String warehouseLocation) {
+	public ResultSet searchDB(String inp) {
+		String[] parts = inp.split("@");
+	    String instrumentType = parts[0];
+	    String brand = parts[1];
+	    String maxCost = parts[2];
+	    String warehouseLocation = parts[3];
 	    StringBuilder query = new StringBuilder("SELECT * FROM Instruments JOIN Inventory ON Instruments.instNumber = Inventory.iNumber JOIN Locations ON Inventory.lNumber = Locations.locNumber");
 	    ArrayList<String> conditions = new ArrayList<>();
 
