@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import javafx.event.ActionEvent;
-
 public class Controller implements Runnable{
 	private Model model;
 	private Scanner in;
