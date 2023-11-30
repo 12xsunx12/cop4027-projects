@@ -55,26 +55,6 @@ public class View extends Application{
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-//    public String getInstrumentTypeComboBox() {
-//        return instrumentTypeComboBox.getValue();
-//    }
-//    
-//    public String getInstrumentBrandComboBox() {
-//        return instrumentBrandComboBox.getValue();
-//    }
-//
-//    public String getWarehouseComboBox() {
-//        return warehouseComboBox.getValue();
-//    }
-//
-//    public String getMaxCostTextField() {
-//        return maxCostTextField.getText();
-//    }
-//    
-//    public Button getSubmitButton() {
-//    	return submitButton;
-//    }
     
     private void initializeComponents() {
         instrumentTypeLabel = new Label("Instrument Type: ");
