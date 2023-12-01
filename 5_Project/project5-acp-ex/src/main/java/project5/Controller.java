@@ -49,32 +49,39 @@ public class Controller implements Runnable{
 		}
 	}
 	
-	public void doService() throws IOException{  
-		while (in.hasNextLine() != false) {
-			String response = in.nextLine();
-			String finalResultStringSentTooMessageBox = "";
-			System.out.println(response);
-			ResultSet results = model.searchDB(response);
-			if (results != null) {
-			    try {
-			        while (results.next()) {
-			            // Construct a string for each row with the required data
-			            String resultString = results.getString("instName") + " " +
-			                                  results.getString("descrip") + " " +
-			                                  results.getDouble("cost") + " " +
-			                                  results.getInt("quantity") + " " +
-			                                  results.getString("address");
+	public void doService() throws IOException {
+		// Inside doService() method in Controller class
+		while (in.hasNextLine()) {
+		    String response = in.nextLine();
+		    System.out.println(response);
+		    ResultSet results = model.searchDB(response);
+		    String finalResultStringSentTooMessageBox = "";
 
-			            finalResultStringSentTooMessageBox += resultString;
-			        }
-			        
-			        out.write(finalResultStringSentTooMessageBox);
-			    } catch (SQLException e) {
-			        System.out.println("Error processing search results: " + e.getMessage());
-			    }
-			} else {
-			    System.out.println("No results found or an error occurred.");
-			}
+		    if (results != null) {
+		        try {
+		            while (results.next()) {
+		                // Construct a string for each row with the required data
+		                String resultString = results.getString("instName") + " " +
+		                        results.getString("descrip") + " " +
+		                        results.getDouble("cost") + " " +
+		                        results.getInt("quantity") + " " +
+		                        results.getString("address");
+
+		                finalResultStringSentTooMessageBox += resultString + "\n\n";
+		            }
+
+		            // Send the constructed message back to the client
+		            out.println(finalResultStringSentTooMessageBox);
+		            out.println("END_OF_RESPONSE"); // Mark the end of response
+		            out.flush(); // Ensure the message is sent
+		        } catch (SQLException e) {
+		            System.out.println("Error processing search results: " + e.getMessage());
+		        }
+		    } else {
+		        System.out.println("No results found or an error occurred.");
+		    }
 		}
+
 	}
+
 }

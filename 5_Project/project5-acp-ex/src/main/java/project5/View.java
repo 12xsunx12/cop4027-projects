@@ -93,13 +93,18 @@ public class View extends Application{
         String maxCost = maxCostTextField.getText();
         String warehouse = warehouseComboBox.getValue();
 
+
         // Send data to the server
         out.println(instrumentType + "@" + instrumentBrand + "@" + maxCost + "@" + warehouse);
         out.flush();
-        
-        while(in.nextLine() != null) {
-        	System.out.println("Hi");
+
+        // Read the response from the server until the special marker
+        StringBuilder serverResponse = new StringBuilder();
+        String line;
+        while (!(line = in.nextLine()).equals("END_OF_RESPONSE")) {
+            serverResponse.append(line).append("\n");
         }
+        showMessage(serverResponse.toString());
     }
 
 
