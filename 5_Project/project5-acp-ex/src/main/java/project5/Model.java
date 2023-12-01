@@ -94,9 +94,6 @@ public class Model {
 	    StringBuilder query = new StringBuilder("SELECT * FROM Instruments JOIN Inventory ON Instruments.instNumber = Inventory.iNumber JOIN Locations ON Inventory.lNumber = Locations.locNumber");
 	    ArrayList<String> conditions = new ArrayList<>();
 
-	    if (instrumentType != null && !instrumentType.isEmpty() && !instrumentType.equals("all")) {
-	        conditions.add("Instruments.instName = '" + instrumentType + "'");
-	    }
 	    if (brand != null && !brand.isEmpty() && !brand.equals("all")) {
 	        conditions.add("Instruments.descrip = '" + brand + "'");
 	    }

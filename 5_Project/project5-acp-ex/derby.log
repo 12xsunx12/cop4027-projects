@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Thu Nov 30 20:06:38 CST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-018c-2320-c0ab-00000ea9ec60 
-on database directory /home/sun/Desktop/College/7_Fall/Adv. Programming/cop4027-projects/5_Project/project5-acp-ex/myDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@7e0babb1 
-Loaded from file:/home/sun/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
-java.vendor=Eclipse Adoptium
-java.runtime.version=17.0.8.1+1
-user.dir=/home/sun/Desktop/College/7_Fall/Adv. Programming/cop4027-projects/5_Project/project5-acp-ex
+Thu Nov 30 21:40:16 CST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-018c-2376-7900-000006f03c60 
+on database directory /home/twells/Documents/javaCode/cop4027-projects/5_Project/project5-acp-ex/myDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1b28cdfa 
+Loaded from file:/home/twells/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+java.vendor=Ubuntu
+java.runtime.version=11.0.21+9-post-Ubuntu-0ubuntu122.04
+user.dir=/home/twells/Documents/javaCode/cop4027-projects/5_Project/project5-acp-ex
 os.name=Linux
 os.arch=amd64
 os.version=5.15.0-89-generic

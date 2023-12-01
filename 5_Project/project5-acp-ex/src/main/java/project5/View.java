@@ -64,9 +64,52 @@ public class View extends Application{
 
         instrumentTypeComboBox = new ComboBox<>();
         instrumentTypeComboBox.getItems().addAll("all", "guitar", "bass", "drums", "keyboard");
+        
 
         instrumentBrandComboBox = new ComboBox<>();
-        instrumentBrandComboBox.getItems().addAll("all", "ludwig", "gibson", "fender");
+        //instrumentBrandComboBox.getItems().addAll("all", "ludwig", "gibson", "fender");
+        instrumentTypeComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            instrumentBrandComboBox.getItems().clear(); // Clear previous items
+
+            if (newValue != null) {
+                switch (newValue) {
+                    case "guitar":
+                        instrumentBrandComboBox.getItems().addAll("gibson", "yamaha");
+                        break;
+                    case "bass":
+                        instrumentBrandComboBox.getItems().addAll("fender");
+                        break;
+                    case "drums":
+                        instrumentBrandComboBox.getItems().addAll("alesis", "roland");
+                        break;
+                    case "keyboard":
+                        instrumentBrandComboBox.getItems().addAll("yamaha", "ludwig");
+                        break;
+                    case "all":
+                        instrumentBrandComboBox.getItems().addAll("ludwig", "gibson", "fender", "yamaha", "alesis", "roland");
+                        break;
+                }
+            }
+        });
+        
+//        instrumentTypeComboBox.getSelectionModel().selectedItemProperty().addListener(observable -> {
+//            instrumentBrandComboBox.getItems().clear(); // Clear previous items
+//
+//            String selectedType = instrumentTypeComboBox.getValue();
+//
+//            if ("guitar".equals(selectedType)) {
+//                instrumentBrandComboBox.getItems().addAll("gibson", "yamaha");
+//            } else if ("bass".equals(selectedType)) {
+//                instrumentBrandComboBox.getItems().addAll("fender");
+//            } else if ("drums".equals(selectedType)) {
+//                instrumentBrandComboBox.getItems().addAll("alesis", "Roland");
+//            } else if ("keyboard".equals(selectedType)) {
+//                instrumentBrandComboBox.getItems().addAll("yamaha", "ludwig");
+//            } else if ("all".equals(selectedType)) {
+//                instrumentBrandComboBox.getItems().addAll("ludwig", "gibson", "fender", "yamaha", "alesis", "roland");
+//            }
+//        });
+
 
         warehouseComboBox = new ComboBox<>();
         warehouseComboBox.getItems().addAll("all", "Pensacola, Florida", "Charlotte, North Carolina", "Dallas, Fort Worth Texas");
@@ -92,6 +135,11 @@ public class View extends Application{
         String instrumentBrand = instrumentBrandComboBox.getValue();
         String maxCost = maxCostTextField.getText();
         String warehouse = warehouseComboBox.getValue();
+        
+        if(instrumentType == null || instrumentBrand == null || maxCost == null || warehouse == null) {
+        	showMessage("Invalid Query");
+        }
+        else {
 
 
         // Send data to the server
@@ -105,6 +153,7 @@ public class View extends Application{
             serverResponse.append(line).append("\n");
         }
         showMessage(serverResponse.toString());
+        }
     }
 
 
