@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 //The view acts as the client side of this project
 
-public class View extends Application{
+public class Client extends Application{
 
     private Label instrumentTypeLabel;
     private Label instrumentBrandLabel;
@@ -46,10 +46,10 @@ public class View extends Application{
 
     private VBox root;
     
-    private Controller controller;
+    private Server controller;
 
     //Constructor
-    public View() {
+    public Client() {
     }
     
     //Displays the result set from the DB query

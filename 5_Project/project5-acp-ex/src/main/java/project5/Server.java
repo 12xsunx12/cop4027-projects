@@ -14,14 +14,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Controller implements Runnable{
+public class Server implements Runnable{
 	private Model model;
 	private Scanner in;
 	private PrintWriter out;
 	private Socket s;
 	
 	//Constructor
-	public Controller(Model model, Socket s) {
+	public Server(Model model, Socket s) {
 		this.model = model;
 		this.s = s;
 	}
@@ -34,7 +34,7 @@ public class Controller implements Runnable{
 	    while (true){
 	    	Socket s = server.accept();
 	        System.out.println("Client connected.");
-	        Controller controller = new Controller(new Model(), s);
+	        Server controller = new Server(new Model(), s);
             Thread t = new Thread(controller);
 	        t.start();
 	    }
