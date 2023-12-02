@@ -1,3 +1,9 @@
+/***************************************************************
+Student Name: Trent Wells, Regan O'Donnell
+File Name: Controller.java
+Assignment number: Project 5
+
+***************************************************************/
 package project5;
 
 import java.io.IOException;
@@ -14,11 +20,13 @@ public class Controller implements Runnable{
 	private PrintWriter out;
 	private Socket s;
 	
+	//Constructor
 	public Controller(Model model, Socket s) {
 		this.model = model;
 		this.s = s;
 	}
 	
+	//Main for controller/server
 	public static void main(String[] args) throws IOException{  
 	    final int SBAP_PORT = 8888;
 	    ServerSocket server = new ServerSocket(SBAP_PORT);
@@ -32,6 +40,7 @@ public class Controller implements Runnable{
 	    }
 	}
 
+	//Run method for the thread created in main
 	@Override
 	public void run() {
 		try{
@@ -49,8 +58,8 @@ public class Controller implements Runnable{
 		}
 	}
 	
+	//This method is called to handle the messages between the model and view
 	public void doService() throws IOException {
-		// Inside doService() method in Controller class
 		while (in.hasNextLine()) {
 		    String response = in.nextLine();
 		    System.out.println(response);
@@ -60,7 +69,6 @@ public class Controller implements Runnable{
 		    if (results != null) {
 		        try {
 		            while (results.next()) {
-		                // Construct a string for each row with the required data
 		                String resultString = results.getString("instName") + " " +
 		                        results.getString("descrip") + " " +
 		                        results.getDouble("cost") + " " +
@@ -69,11 +77,9 @@ public class Controller implements Runnable{
 
 		                finalResultStringSentTooMessageBox += resultString + "\n\n";
 		            }
-
-		            // Send the constructed message back to the client
 		            out.println(finalResultStringSentTooMessageBox);
-		            out.println("END_OF_RESPONSE"); // Mark the end of response
-		            out.flush(); // Ensure the message is sent
+		            out.println("END_OF_RESPONSE");
+		            out.flush();
 		        } catch (SQLException e) {
 		            System.out.println("Error processing search results: " + e.getMessage());
 		        }

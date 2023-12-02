@@ -1,3 +1,9 @@
+/***************************************************************
+Student Name: Trent Wells, Regan O'Donnell
+File Name: View.java
+Assignment number: Project 5
+
+***************************************************************/
 package project5;
 
 import java.io.IOException;
@@ -17,6 +23,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+//The view acts as the client side of this project
 
 public class View extends Application{
 
@@ -40,14 +48,11 @@ public class View extends Application{
     
     private Controller controller;
 
+    //Constructor
     public View() {
-    	//initializeComponents();
     }
     
-    public VBox getRoot() {
-        return root;
-    }
-    
+    //Displays the result set from the DB query
     public void showMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Query Information");
@@ -56,6 +61,7 @@ public class View extends Application{
         alert.showAndWait();
     }
     
+    //Creates all of the GUI components in the View along with their action listeners
     private void initializeComponents() {
         instrumentTypeLabel = new Label("Instrument Type: ");
         instrumentBrandLabel = new Label("Instrument Brand: ");
@@ -64,12 +70,10 @@ public class View extends Application{
 
         instrumentTypeComboBox = new ComboBox<>();
         instrumentTypeComboBox.getItems().addAll("all", "guitar", "bass", "drums", "keyboard");
-        
 
         instrumentBrandComboBox = new ComboBox<>();
-        //instrumentBrandComboBox.getItems().addAll("all", "ludwig", "gibson", "fender");
         instrumentTypeComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            instrumentBrandComboBox.getItems().clear(); // Clear previous items
+            instrumentBrandComboBox.getItems().clear();
 
             if (newValue != null) {
                 switch (newValue) {
@@ -91,25 +95,6 @@ public class View extends Application{
                 }
             }
         });
-        
-//        instrumentTypeComboBox.getSelectionModel().selectedItemProperty().addListener(observable -> {
-//            instrumentBrandComboBox.getItems().clear(); // Clear previous items
-//
-//            String selectedType = instrumentTypeComboBox.getValue();
-//
-//            if ("guitar".equals(selectedType)) {
-//                instrumentBrandComboBox.getItems().addAll("gibson", "yamaha");
-//            } else if ("bass".equals(selectedType)) {
-//                instrumentBrandComboBox.getItems().addAll("fender");
-//            } else if ("drums".equals(selectedType)) {
-//                instrumentBrandComboBox.getItems().addAll("alesis", "Roland");
-//            } else if ("keyboard".equals(selectedType)) {
-//                instrumentBrandComboBox.getItems().addAll("yamaha", "ludwig");
-//            } else if ("all".equals(selectedType)) {
-//                instrumentBrandComboBox.getItems().addAll("ludwig", "gibson", "fender", "yamaha", "alesis", "roland");
-//            }
-//        });
-
 
         warehouseComboBox = new ComboBox<>();
         warehouseComboBox.getItems().addAll("all", "Pensacola, Florida", "Charlotte, North Carolina", "Dallas, Fort Worth Texas");
@@ -118,7 +103,6 @@ public class View extends Application{
 
         submitButton = new Button("Submit Request");
         submitButton.setOnAction(e -> handleSubmitButtonAction());
-        //submitButton.setOnAction(); 
 
         root = new VBox(10);
         root.getChildren().addAll(
@@ -130,6 +114,7 @@ public class View extends Application{
         );
     }
     
+    //This method handles the input information after the submit button is pressed
     private void handleSubmitButtonAction() {
     	String instrumentType = instrumentTypeComboBox.getValue();
         String instrumentBrand = instrumentBrandComboBox.getValue();
@@ -140,13 +125,8 @@ public class View extends Application{
         	showMessage("Invalid Query");
         }
         else {
-
-
-        // Send data to the server
         out.println(instrumentType + "@" + instrumentBrand + "@" + maxCost + "@" + warehouse);
         out.flush();
-
-        // Read the response from the server until the special marker
         StringBuilder serverResponse = new StringBuilder();
         String line;
         while (!(line = in.nextLine()).equals("END_OF_RESPONSE")) {
@@ -156,8 +136,7 @@ public class View extends Application{
         }
     }
 
-
-
+    //Main for the client/view
     public static void main(String[] args) throws IOException{
 		launch(args);
 	}
@@ -174,7 +153,7 @@ public class View extends Application{
         
         initializeComponents();
         
-		Scene scene = new Scene(getRoot(), 500, 350); // Create the scene with the root from view
+		Scene scene = new Scene(root, 500, 350);
         primaryStage.setScene(scene);
         primaryStage.show();
 	}

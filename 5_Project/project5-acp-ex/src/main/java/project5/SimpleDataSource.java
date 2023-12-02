@@ -1,3 +1,9 @@
+/***************************************************************
+Student Name: Trent Wells, Regan O'Donnell
+File Name: SimpleDataSource.java
+Assignment number: Project 5
+
+***************************************************************/
 package project5;
 import java.sql.Connection;
 import java.sql.DriverManager;

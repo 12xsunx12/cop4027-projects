@@ -1,3 +1,9 @@
+/***************************************************************
+Student Name: Trent Wells, Regan O'Donnell
+File Name: Model.java
+Assignment number: Project 5
+
+***************************************************************/
 package project5;
 
 import java.sql.Connection;
@@ -10,11 +16,13 @@ public class Model {
 	public Connection conn;
 	public Statement stat;
 	
+	//Constructor
 	public Model() {
 		initDB();
 		createDatabase();
 	}
 	
+	//Creates the DB
 	public void initDB() {
 		try {
 			System.out.println("Establishing Connection...");
@@ -27,6 +35,7 @@ public class Model {
 		}
 	}
 	
+	//Drops tables
 	public void dropTable(String tableName) {
 		try {  
 			System.out.println("Dropping Table...");
@@ -37,6 +46,7 @@ public class Model {
 		} 
 	}
 	
+	//Creates tables
 	public void createTable(String input) {
 		System.out.println("Creating Table...");
 		try {
@@ -47,12 +57,14 @@ public class Model {
 		}
 	}
 	
+	//This method queries the DB given a query
 	public ResultSet queryResultSet(String command) throws SQLException {
 		ResultSet result = stat.executeQuery(command);
 		
 		return result;
 	}
 	
+	//This method issues a command to the DB given a command
 	public void executeSQLCommand(String command) {
 		try {
 			stat.execute(command);
@@ -62,6 +74,7 @@ public class Model {
 		}
 	}
 	
+	//Works with createTable() and initDB() to set up the DB
 	public void createDatabase() {
 		dropTable("Instruments");
 		dropTable("Locations");
@@ -84,7 +97,7 @@ public class Model {
 	}
 	
 	
-	
+	//Given the input from the view/client, this method will search the DB for those results
 	public ResultSet searchDB(String inp) {
 		String[] parts = inp.split("@");
 	    String instrumentType = parts[0];
@@ -117,10 +130,8 @@ public class Model {
 	        return null;
 	    }
 	}
-
-
-
 	
+	//Creates the instrument table
 	private ResultSet createInstruments() throws Exception {
 		createTable("CREATE TABLE Instruments (instName CHAR(12),instNumber INTEGER,cost DOUBLE,descrip CHAR(20))");
 		executeSQLCommand("INSERT INTO Instruments VALUES ('guitar',1,100.0,'yamaha')");
@@ -134,6 +145,7 @@ public class Model {
 		return result;
 	}
 
+	//Creates the location table
 	private ResultSet createLocations() throws Exception {
 		createTable("CREATE TABLE Locations (locName CHAR(12),locNumber INTEGER,address CHAR(50))");
 		executeSQLCommand("INSERT INTO Locations VALUES ('PNS',1,'Pensacola Florida')");
@@ -143,6 +155,7 @@ public class Model {
 		return result;
 	}
 
+	//Created the inverntory table
 	private ResultSet createInventory() throws Exception {
 		createTable("CREATE TABLE Inventory (iNumber INTEGER,lNumber INTEGER,quantity INTEGER)");
 		executeSQLCommand("INSERT INTO Inventory VALUES (1,1,15)");
@@ -169,5 +182,4 @@ public class Model {
 		ResultSet result = queryResultSet("SELECT * FROM Inventory");
 		return result;
 	}
-	
 }
