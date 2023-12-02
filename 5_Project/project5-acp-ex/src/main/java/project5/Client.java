@@ -28,17 +28,12 @@ import javafx.stage.Stage;
 
 public class Client extends Application{
 
-    private Label instrumentTypeLabel;
-    private Label instrumentBrandLabel;
-    private Label maxCostLabel;
-    private Label warehouseLabel;
+    private Label instrumentTypeLabel, instrumentBrandLabel, maxCostLabel, warehouseLabel;
     
     private Scanner in;
 	private PrintWriter out;
 
-    private ComboBox<String> instrumentTypeComboBox;
-    private ComboBox<String> instrumentBrandComboBox;
-    private ComboBox<String> warehouseComboBox;
+    private ComboBox<String> instrumentTypeComboBox, instrumentBrandComboBox, warehouseComboBox;
 
     private TextField maxCostTextField;
 
